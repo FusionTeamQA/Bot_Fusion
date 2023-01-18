@@ -1,0 +1,7 @@
+setting.py
+*.log
+.idea
+.Python
+pyvenv.cfg
+bin
+lib
