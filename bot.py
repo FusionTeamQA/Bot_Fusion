@@ -2,6 +2,8 @@ import telebot
 from telebot import types
 import setting
 
+# coding=utf-8
+
 bot = telebot.TeleBot(setting.token)
 
 user_dict = {}
