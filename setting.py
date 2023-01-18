@@ -1,6 +1,6 @@
 token = '5975275814:AAGkgWEqk3XQX25fbXIswWstgUSWIWfpe2M'
 admin_id_ugraswim = 597010493
-# admin_hr_id =
+admin_hr_id = 563921309
 # admin_kate_id =
 #Общие ссылки
 website = "https://fusion-tech.pro"

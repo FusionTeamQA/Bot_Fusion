@@ -1,8 +1,9 @@
+# -*- coding: utf-8 -*-
+
 import telebot
 from telebot import types
 import setting
 
-# coding=utf-8
 
 bot = telebot.TeleBot(setting.token)
 
@@ -268,7 +269,7 @@ def process_spec_step(message):
         language = message.text
         user = user_dict[chat_id]
         user.languages = language
-        msg = bot.send_message(chat_id, 'Где проживаете?')
+        msg = bot.send_message(chat_id, 'Локация')
         bot.register_next_step_handler(msg, process_location_step)
     except Exception as e:
         bot.reply_to(message, 'Непредвиденная ошибка')
@@ -280,7 +281,7 @@ def process_location_step(message):
         location = message.text
         user = user_dict[chat_id]
         user.location = location
-        msg = bot.send_message(chat_id, 'Желаемый формат работы (удаленно/из офиса)')
+        msg = bot.send_message(chat_id, 'Формат работы (удаленно/офис)')
         bot.register_next_step_handler(msg, process_format_work_step)
     except Exception as e:
         bot.reply_to(message, 'Непредвиденная ошибка')
@@ -292,7 +293,7 @@ def process_format_work_step(message):
         format_work = message.text
         user = user_dict[chat_id]
         user.format_work = format_work
-        msg = bot.send_message(chat_id, 'Ваш опыт работы?')
+        msg = bot.send_message(chat_id, 'Опыт работы?')
         bot.register_next_step_handler(msg, process_experience_step)
     except Exception as e:
         bot.reply_to(message, 'Непредвиденная ошибка')
@@ -317,7 +318,7 @@ def process_git_acc_step(message):
         git_acc1 = message.text
         user = user_dict[chat_id]
         user.git_acc = git_acc1
-        msg = bot.send_message(chat_id, "Ваши контактные данные")
+        msg = bot.send_message(chat_id, "Контактные данные")
         bot.register_next_step_handler(msg, contnums)
 
     except Exception as e:
@@ -343,7 +344,6 @@ def send_z(message):
     last_name = message.chat.last_name
     user_name = message.chat.username
     z = message.text  # text user
-    admin_id_ugraswim = setting.admin_id
     app_text = []
     app_name_first = []
     app_name_last = []
@@ -354,28 +354,28 @@ def send_z(message):
     app_text.append(z)
     user = user_dict[chat_id]
     user_chats = message.from_user.id
-    bot.send_message(admin_id_ugraswim, f'Поступил новый отклик от {app_name_first[0]} {app_name_last[0]} !\n'
+    bot.send_message(setting.admin_id_ugraswim, f'Поступил новый отклик от {app_name_first[0]} {app_name_last[0]} !\n'
                      + f'username в тг = @{app_username[0]} \n'
                      + f'Возраст  -  {user.age} \n'
                      + f'Локация  -  {user.location} \n'
                      + f'Опыт работы  -  {user.experience} \n'
-                     + f'Формат работы  -  {user.format_work} \n'
-                     + f'Профиль github/социальная сеть  -  {user.git_acc} \n'
                      + f'Специализация: {user.languages} \n'
+                     + f'Основные навыки: - {app_text[0]} \n'
+                     + f'Профиль github/социальная сеть  -  {user.git_acc} \n'
+                     + f'Формат работы  -  {user.format_work} \n'
                      + f'Контактные данные: {user.nums} \n'
-                     + f'Основные навыки: \n' + f'{app_text[0]}\n'
 
                      + f'ID юзера: {user_chats}')
-    bot.send_message(admin_id_ugraswim, f'Поступил новый отклик от {app_name_first[0]} {app_name_last[0]} !\n'
+    bot.send_message(setting.admin_hr_id, f'Поступил новый отклик от {app_name_first[0]} {app_name_last[0]} !\n'
                      + f'username в тг = @{app_username[0]} \n'
                      + f'Возраст  -  {user.age} \n'
                      + f'Локация  -  {user.location} \n'
                      + f'Опыт работы  -  {user.experience} \n'
-                     + f'Формат работы  -  {user.format_work} \n'
-                     + f'Профиль github/социальная сеть  -  {user.git_acc} \n'
                      + f'Специализация: {user.languages} \n'
+                     + f'Основные навыки: - {app_text[0]} \n'
+                     + f'Профиль github/социальная сеть  -  {user.git_acc} \n'
+                     + f'Формат работы  -  {user.format_work} \n'
                      + f'Контактные данные: {user.nums} \n'
-                     + f'Основные навыки: \n' + f'{app_text[0]}\n'
 
                      + f'ID юзера: {user_chats}')
     app_name_first.clear()
