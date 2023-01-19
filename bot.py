@@ -40,6 +40,7 @@ def get_text_messages(message):
     # Русский язык
     if message.text == '🇷🇺 Русский':
         print(message.from_user.id)
+        print(message.chat.username)
         markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
         btn1 = types.KeyboardButton("🌐 Веб-Сайт")
         btn2 = types.KeyboardButton('📢 Вакансии')
