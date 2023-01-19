@@ -28,6 +28,7 @@ class User:
 
 @bot.message_handler(commands=['start'])  # стартовая команда
 def start(message):
+    print('Bot Started')
     markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
     btn1 = types.KeyboardButton("🇷🇺 Русский")
     btn2 = types.KeyboardButton('🇬🇧 English')
@@ -39,8 +40,10 @@ def start(message):
 def get_text_messages(message):
     # Русский язык
     if message.text == '🇷🇺 Русский':
-        print(message.from_user.id)
+        print('Посетил бот')
         print(message.chat.username)
+        print(message.from_user.id)
+        print('_____________________')
         markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
         btn1 = types.KeyboardButton("🌐 Веб-Сайт")
         btn2 = types.KeyboardButton('📢 Вакансии')
