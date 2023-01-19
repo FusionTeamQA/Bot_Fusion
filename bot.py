@@ -12,6 +12,8 @@ user_chats = 0
 
 
 class User:
+
+
     def __init__(self, name):
         self.name = None
         self.age = None
@@ -23,7 +25,6 @@ class User:
         keys = ['name', 'age', 'nums', 'location', 'experience', 'format_work']
         for key in keys:
             self.key = None
-
 
 @bot.message_handler(commands=['start'])  # стартовая команда
 def start(message):
