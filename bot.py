@@ -52,8 +52,10 @@ def get_text_messages(message):
         btn5 = types.KeyboardButton('📝 Оставить заявку')
         btn7 = types.KeyboardButton('👥 Мы в ВКонтакте')
         btn8 = types.KeyboardButton('🔥 Мы на Хабр')
-        btn10 = types.KeyboardButton('🔙 Вернуться к выбору языка')
-        markup.add(btn1, btn2, btn3, btn4, btn5, btn7, btn8)
+        btn9 = types.KeyboardButton('🅱️ Мы в Behance')
+        btn10 = types.KeyboardButton('✍️️ Мы в LinkedIn')
+        btn11 = types.KeyboardButton('🔙 Вернуться к выбору языка')
+        markup.add(btn1, btn2, btn3, btn4, btn5, btn7, btn8, btn9, btn10)
         bot.send_message(message.from_user.id, "👋 Вас приветствует бот компании Fusion Tech", reply_markup=markup)
         bot.send_message(message.from_user.id, '👀 Выберите интересующий вас раздел')
 
@@ -142,8 +144,10 @@ def get_text_messages(message):
         btn5 = types.KeyboardButton('📝 Оставить заявку')
         btn7 = types.KeyboardButton('👥 Мы в ВКонтакте')
         btn8 = types.KeyboardButton('🔥 Мы на Хабр')
-        btn10 = types.KeyboardButton('🔙 Вернуться к выбору языка')
-        markup.add(btn1, btn2, btn3, btn4, btn5, btn7, btn8)
+        btn9 = types.KeyboardButton('🅱️ Мы в Behance')
+        btn10 = types.KeyboardButton('✍️️ Мы в LinkedIn')
+        btn11 = types.KeyboardButton('🔙 Вернуться к выбору языка')
+        markup.add(btn1, btn2, btn3, btn4, btn5, btn7, btn8, btn9, btn10)
         bot.send_message(message.from_user.id, "👀 Выбери интересующий раздел", reply_markup=markup)
 
     elif message.text == '👥 Мы в ВКонтакте':
@@ -211,6 +215,26 @@ def get_text_messages(message):
         bot.send_message(message.from_user.id,
                          'По общим вопросам пиши нам в сообщество, по ссылке ' + setting.VK_GROUP_CHAT,
                          reply_markup=markup, parse_mode='Markdown')
+
+    elif message.text == '✍️️ Мы в LinkedIn':
+        markup = types.ReplyKeyboardMarkup(resize_keyboard=True, row_width=1)
+        btn1 = types.KeyboardButton('🔙 Главное меню')
+        markup.add(btn1)
+        markup2 = types.InlineKeyboardMarkup()
+        markup2.add(types.InlineKeyboardButton("Перейти к нам на страницу", setting.LINKEDIN))
+        bot.send_message(message.from_user.id, '\n Перейти к разделу можно по ссылке ' + setting.LINKEDIN,
+                         reply_markup=markup2, parse_mode='Markdown')
+
+    elif message.text == '🅱️ Мы в Behance':
+        markup = types.ReplyKeyboardMarkup(resize_keyboard=True, row_width=1)
+        btn1 = types.KeyboardButton('🔙 Главное меню')
+        markup.add(btn1)
+        markup2 = types.InlineKeyboardMarkup()
+        markup2.add(types.InlineKeyboardButton("Перейти к нам на страницу", setting.BEHANCE))
+        bot.send_message(message.from_user.id,
+                         'With our expertise,we can suggest the best solutions for your project to make it as good as possible.'
+                         '\n Перейти к разделу можно по ссылке ' + setting.BEHANCE,
+                         reply_markup=markup2, parse_mode='Markdown')
 
     elif message.text == '🔥 Мы на Хабр':
         markup = types.ReplyKeyboardMarkup(resize_keyboard=True, row_width=1)
