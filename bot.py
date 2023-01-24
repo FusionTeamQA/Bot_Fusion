@@ -3,6 +3,8 @@
 import telebot
 from telebot import types
 import setting
+import os, sys
+from requests.exceptions import ConnectionError, ReadTimeout
 
 
 bot = telebot.TeleBot(setting.token)
@@ -414,4 +416,10 @@ def send_z(message):
     bot.send_message(chat_id, "Заявка отправлена, мы свяжемся с Вами в ближайшее время")
 
 
-bot.polling(none_stop=True, interval=0)  # запускаемс
+try:
+    bot.infinity_polling(timeout=90, long_polling_timeout=5)
+except (ConnectionError, ReadTimeout) as e:
+    sys.stdout.flush()
+    os.execv(sys.argv[0], sys.argv)
+else:
+    bot.infinity_polling(timeout=90, long_polling_timeout=5)
