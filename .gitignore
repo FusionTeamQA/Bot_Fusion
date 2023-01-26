@@ -6,3 +6,4 @@ pyvenv.cfg
 bin
 lib
 backup.py
+bd
