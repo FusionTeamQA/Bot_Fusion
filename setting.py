@@ -23,7 +23,7 @@ DESIGN = 'https://career.habr.com/vacancies/1000116917'
 # ВК
 
 VK = 'https://vk.com/fusion_tech'
-VK_HR = 'https://vk.com/dasha_fusion_hr'
+VK_HR = 'https://vk.com/id500941999'
 VK_GROUP_CHAT = 'https://vk.com/im?sel=-158106363'
 BEHANCE = 'https://www.behance.net/fusion-tech'
 HABR = 'https://career.habr.com/companies/fusion-tech'
