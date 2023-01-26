@@ -28,3 +28,4 @@ VK_GROUP_CHAT = 'https://vk.com/im?sel=-158106363'
 BEHANCE = 'https://www.behance.net/fusion-tech'
 HABR = 'https://career.habr.com/companies/fusion-tech'
 LINKEDIN = 'http://linkedin.com/company/fusion-web-dev'
+INSTAGRAM = "https://www.instagram.com/fusion.tech.global/"

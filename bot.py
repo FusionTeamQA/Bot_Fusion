@@ -302,6 +302,18 @@ def get_text_messages(message):
                          '\n Перейти к разделу можно по ссылке ' + setting.BEHANCE,
                          reply_markup=markup2, parse_mode='Markdown')
 
+    elif message.text == '📸 Мы в Instagram':
+        markup = types.ReplyKeyboardMarkup(resize_keyboard=True, row_width=1)
+        btn1 = types.KeyboardButton('🔙 Главное меню')
+        markup.add(btn1)
+        markup2 = types.InlineKeyboardMarkup()
+        markup2.add(types.InlineKeyboardButton("Перейти к нам на страницу", setting.INSTAGRAM))
+        bot.send_message(message.from_user.id,
+                         '🏆ТОП-100 работодателей России // Хабр Карьера'
+                         '\n📍Taganrog // Yerevan // Claymont'
+                         '\n Перейти к разделу можно по ссылке ' + setting.INSTAGRAM,
+                         reply_markup=markup2, parse_mode='Markdown')
+
     elif message.text == '🔥 Мы на Хабр':
         markup = types.ReplyKeyboardMarkup(resize_keyboard=True, row_width=1)
         btn1 = types.KeyboardButton('🔙 Главное меню')
