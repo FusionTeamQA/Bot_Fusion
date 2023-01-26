@@ -3,9 +3,9 @@
 import telebot
 from telebot import types
 import setting
+import sqlite3
 import os, sys
 from requests.exceptions import ConnectionError, ReadTimeout
-
 
 bot = telebot.TeleBot(setting.token)
 
@@ -14,7 +14,6 @@ user_chats = 0
 
 
 class User:
-
 
     def __init__(self, name):
         self.name = None
@@ -28,15 +27,40 @@ class User:
         for key in keys:
             self.key = None
 
+
 @bot.message_handler(commands=['start'])  # стартовая команда
 def start(message):
-    print('Bot Started')
+    conn = sqlite3.connect('bd/batabase.db')
+    cursor = conn.cursor()
+    cursor.execute('''CREATE TABLE IF NOT EXISTS users(
+        id INTEGER, 
+        user_first_name TEXT, 
+        user_last_name TEXT, 
+        username TEXT
+        )''')
+    conn.commit()
+
+    people_id = message.from_user.id
+    cursor.execute(f"SELECT id FROM users WHERE id = {people_id}")
+    data = cursor.fetchone()
+    if data is None:
+        USER_ID = [message.from_user.id, message.from_user.first_name, message.from_user.last_name,
+                   message.from_user.username]
+        cursor.execute("INSERT INTO users VALUES(?,?,?,?);", USER_ID)
+        conn.commit()
+    else:
+        print("Старт бота - Такой пользователь уже есть в базе данных")
+        print(message.from_user.username)
+
     markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
     btn1 = types.KeyboardButton("🇷🇺 Русский")
     btn2 = types.KeyboardButton('🇬🇧 English')
     markup.add(btn1)
     bot.send_message(message.from_user.id, "🇷🇺 Выберите язык / 🇬🇧 Choose your language", reply_markup=markup)
 
+@bot.message_handler(content_types=['sticker'])
+def send_sticker(message):
+    print(message.sticker.file_id)
 
 @bot.message_handler(content_types=['text'])
 def get_text_messages(message):
@@ -44,23 +68,62 @@ def get_text_messages(message):
     if message.text == '🇷🇺 Русский':
         print('Посетил бот')
         print(message.chat.username)
-        print(message.from_user.id)
         print('_____________________')
-        markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
-        btn1 = types.KeyboardButton("🌐 Веб-Сайт")
+        markup = types.ReplyKeyboardMarkup(resize_keyboard=True, row_width=2)
+        btn1 = types.KeyboardButton("🌐 Сайт")
         btn2 = types.KeyboardButton('📢 Вакансии')
         btn3 = types.KeyboardButton('📁 Проекты')
         btn4 = types.KeyboardButton('📚 Блог')
         btn5 = types.KeyboardButton('📝 Оставить заявку')
-        btn7 = types.KeyboardButton('👥 Мы в ВКонтакте')
+        btn7 = types.KeyboardButton('👥 Мы в ВК')
         btn8 = types.KeyboardButton('🔥 Мы на Хабр')
-        btn9 = types.KeyboardButton('🅱️ Мы в Behance')
-        btn10 = types.KeyboardButton('✍️️ Мы в LinkedIn')
+        btn9 = types.KeyboardButton('🅱️ Мы на Behance')
+        btn12 = types.KeyboardButton('📸 Мы в Instagram')
+        btn10 = types.KeyboardButton('✍️️ Мы на LinkedIn')
         btn11 = types.KeyboardButton('🔙 Вернуться к выбору языка')
-        markup.add(btn1, btn2, btn3, btn4, btn5, btn7, btn8, btn9, btn10)
+        markup.add(btn1, btn2, btn3, btn4, btn5, btn7, btn8, btn9, btn10, btn12)
         bot.send_message(message.from_user.id, "👋 Вас приветствует бот компании Fusion Tech", reply_markup=markup)
         bot.send_message(message.from_user.id, '👀 Выберите интересующий вас раздел')
 
+    if message.text == 'русский':
+        print('Посетил бот')
+        print(message.chat.username)
+        print('_____________________')
+        markup = types.ReplyKeyboardMarkup(resize_keyboard=True, row_width=2)
+        btn1 = types.KeyboardButton("🌐 Сайт")
+        btn2 = types.KeyboardButton('📢 Вакансии')
+        btn3 = types.KeyboardButton('📁 Проекты')
+        btn4 = types.KeyboardButton('📚 Блог')
+        btn5 = types.KeyboardButton('📝 Оставить заявку')
+        btn7 = types.KeyboardButton('👥 Мы в ВК')
+        btn8 = types.KeyboardButton('🔥 Мы на Хабр')
+        btn9 = types.KeyboardButton('🅱️ Мы на Behance')
+        btn12 = types.KeyboardButton('📸 Мы в Instagram')
+        btn10 = types.KeyboardButton('✍️️ Мы на LinkedIn')
+        btn11 = types.KeyboardButton('🔙 Вернуться к выбору языка')
+        markup.add(btn1, btn2, btn3, btn4, btn5, btn7, btn8, btn9, btn10, btn12)
+        bot.send_message(message.from_user.id, "👋 Вас приветствует бот компании Fusion Tech", reply_markup=markup)
+        bot.send_message(message.from_user.id, '👀 Выберите интересующий вас раздел')
+
+    if message.text == 'Русский':
+        print('Посетил бот')
+        print(message.chat.username)
+        print('_____________________')
+        markup = types.ReplyKeyboardMarkup(resize_keyboard=True, row_width=2)
+        btn1 = types.KeyboardButton("🌐 Сайт")
+        btn2 = types.KeyboardButton('📢 Вакансии')
+        btn3 = types.KeyboardButton('📁 Проекты')
+        btn4 = types.KeyboardButton('📚 Блог')
+        btn5 = types.KeyboardButton('📝 Оставить заявку')
+        btn7 = types.KeyboardButton('👥 Мы в ВК')
+        btn8 = types.KeyboardButton('🔥 Мы на Хабр')
+        btn9 = types.KeyboardButton('🅱️ Мы на Behance')
+        btn12 = types.KeyboardButton('📸 Мы в Instagram')
+        btn10 = types.KeyboardButton('✍️️ Мы на LinkedIn')
+        btn11 = types.KeyboardButton('🔙 Вернуться к выбору языка')
+        markup.add(btn1, btn2, btn3, btn4, btn5, btn7, btn8, btn9, btn10, btn12)
+        bot.send_message(message.from_user.id, "👋 Вас приветствует бот компании Fusion Tech", reply_markup=markup)
+        bot.send_message(message.from_user.id, '👀 Выберите интересующий вас раздел')
     elif message.text == '🔙 Вернуться к выбору языка':
         markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
         btn1 = types.KeyboardButton("🇷🇺 Русский")
@@ -68,7 +131,7 @@ def get_text_messages(message):
         markup.add(btn1, btn2)
         bot.send_message(message.from_user.id, "🇷🇺 Выберите язык / 🇬🇧 Choose your language", reply_markup=markup)
 
-    elif message.text == '🌐 Веб-Сайт':
+    elif message.text == '🌐 Сайт':
         markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
         markup2 = types.InlineKeyboardMarkup()
         markup2.add(types.InlineKeyboardButton("Посетить веб-сайт", setting.website))
@@ -138,21 +201,22 @@ def get_text_messages(message):
                          reply_markup=markup2, parse_mode='Markdown')
 
     elif message.text == '🔙 Главное меню':
-        markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
-        btn1 = types.KeyboardButton("🌐 Веб-Сайт")
+        markup = types.ReplyKeyboardMarkup(resize_keyboard=True, row_width=2)
+        btn1 = types.KeyboardButton("🌐 Сайт")
         btn2 = types.KeyboardButton('📢 Вакансии')
         btn3 = types.KeyboardButton('📁 Проекты')
         btn4 = types.KeyboardButton('📚 Блог')
         btn5 = types.KeyboardButton('📝 Оставить заявку')
-        btn7 = types.KeyboardButton('👥 Мы в ВКонтакте')
+        btn7 = types.KeyboardButton('👥 Мы в ВК')
         btn8 = types.KeyboardButton('🔥 Мы на Хабр')
-        btn9 = types.KeyboardButton('🅱️ Мы в Behance')
-        btn10 = types.KeyboardButton('✍️️ Мы в LinkedIn')
+        btn9 = types.KeyboardButton('🅱️ Мы на Behance')
+        btn12 = types.KeyboardButton('📸 Мы в Instagram')
+        btn10 = types.KeyboardButton('✍️️ Мы на LinkedIn')
         btn11 = types.KeyboardButton('🔙 Вернуться к выбору языка')
-        markup.add(btn1, btn2, btn3, btn4, btn5, btn7, btn8, btn9, btn10)
+        markup.add(btn1, btn2, btn3, btn4, btn5, btn7, btn8, btn9, btn10, btn12)
         bot.send_message(message.from_user.id, "👀 Выбери интересующий раздел", reply_markup=markup)
 
-    elif message.text == '👥 Мы в ВКонтакте':
+    elif message.text == '👥 Мы в ВК':
         markup = types.ReplyKeyboardMarkup(resize_keyboard=True, row_width=1)
         btn1 = types.KeyboardButton('🕵🏼 Написать Даше (HR компании)')
         btn2 = types.KeyboardButton('✏️ Написать нам')
@@ -163,6 +227,7 @@ def get_text_messages(message):
                          'Перейти к группе ВК можно по ссылке ' + setting.VK,
                          reply_markup=markup, parse_mode='Markdown')
     # Small talk
+
 
     elif message.text == 'Привет!':
         bot.send_message(message.from_user.id, 'Привет!')
@@ -183,7 +248,6 @@ def get_text_messages(message):
         bot.send_message(message.from_user.id, 'Хорошо!')
 
     elif message.text == 'хочу в штат':
-        chat_id = message.chat.id
         bot.send_message(message.from_user.id, 'Оставьте заявку для дальнейшего собеседования')
 
     elif message.text == 'пока':
@@ -218,7 +282,7 @@ def get_text_messages(message):
                          'По общим вопросам пиши нам в сообщество, по ссылке ' + setting.VK_GROUP_CHAT,
                          reply_markup=markup, parse_mode='Markdown')
 
-    elif message.text == '✍️️ Мы в LinkedIn':
+    elif message.text == '✍️️ Мы на LinkedIn':
         markup = types.ReplyKeyboardMarkup(resize_keyboard=True, row_width=1)
         btn1 = types.KeyboardButton('🔙 Главное меню')
         markup.add(btn1)
@@ -227,7 +291,7 @@ def get_text_messages(message):
         bot.send_message(message.from_user.id, '\n Перейти к разделу можно по ссылке ' + setting.LINKEDIN,
                          reply_markup=markup2, parse_mode='Markdown')
 
-    elif message.text == '🅱️ Мы в Behance':
+    elif message.text == '🅱️ Мы на Behance':
         markup = types.ReplyKeyboardMarkup(resize_keyboard=True, row_width=1)
         btn1 = types.KeyboardButton('🔙 Главное меню')
         markup.add(btn1)
@@ -385,6 +449,10 @@ def send_z(message):
     app_text.append(z)
     user = user_dict[chat_id]
     user_chats = message.from_user.id
+    # us_id = message.from_user.id
+    # us_f_name = message.from_user.first_name
+    # us_l_sname = message.from_user.last_name
+    # username = message.from_user.username
     bot.send_message(setting.admin_id_ugraswim, f'Поступил новый отклик от {app_name_first[0]} {app_name_last[0]} !\n'
                      + f'username в тг = @{app_username[0]} \n'
                      + f'Возраст  -  {user.age} \n'
@@ -409,6 +477,34 @@ def send_z(message):
                      + f'Контактные данные: {user.nums} \n'
 
                      + f'ID юзера: {user_chats}')
+    conn = sqlite3.connect('bd/batabase.db')
+    cursor = conn.cursor()
+    user = user_dict[chat_id]
+    cursor.execute('''CREATE TABLE IF NOT EXISTS orders(
+            id INTEGER,
+            user_first_name TEXT,
+            user_last_name TEXT,
+            username TEXT
+            location TEXT
+            special TEXT
+            nums TEXT
+            );''')
+    conn.commit()
+    id_people = message.from_user.id
+    cursor.execute(f"SELECT id FROM orders WHERE id = {id_people}")
+    data = cursor.fetchone()
+    if data is None:
+        order = [message.from_user.id,
+                 message.from_user.first_name,
+                 message.from_user.last_name,
+                 message.from_user.username,
+                 user.location,
+                 user.languages,
+                 user.nums]
+        cursor.execute("INSERT INTO orders VALUES(?,?,?,?,?,?,?);", order)
+        conn.commit()
+    else:
+        print("Такой ID пользователя уже есть в базе данных")
     app_name_first.clear()
     app_name_last.clear()
     app_username.clear()
