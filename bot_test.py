@@ -1,13 +1,17 @@
 # -*- coding: utf-8 -*-
-
 import telebot
 from telebot import types
 import setting
 import sqlite3
+import logging
 import os, sys
 from requests.exceptions import ConnectionError, ReadTimeout
 
-bot = telebot.TeleBot(setting.token_test)
+logging.basicConfig(format='%(asctime)s - %(levelname)s - %(message)s',
+                    level=logging.INFO,
+                    filename='bot.log'
+                    )
+bot = telebot.TeleBot(setting.token)
 
 user_dict = {}
 user_chats = 0
@@ -66,7 +70,8 @@ def send_sticker(message):
 def get_text_messages(message):
     # Русский язык
     if message.text == '🇷🇺 Русский':
-        print('Посетил бот')
+        print('Посетил бот - ' + message.chat.username)
+        logging.info('Start bot - ' + message.chat.username)
         print(message.chat.username)
         print('_____________________')
         markup = types.ReplyKeyboardMarkup(resize_keyboard=True, row_width=2)
@@ -132,6 +137,7 @@ def get_text_messages(message):
         bot.send_message(message.from_user.id, "🇷🇺 Выберите язык / 🇬🇧 Choose your language", reply_markup=markup)
 
     elif message.text == '🌐 Сайт':
+        logging.info('Открыт раздел сайт, юзер - ' + message.chat.username)
         markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
         markup2 = types.InlineKeyboardMarkup()
         markup2.add(types.InlineKeyboardButton("Посетить веб-сайт", setting.website))
@@ -139,6 +145,7 @@ def get_text_messages(message):
                          'Наша гордость - наша история.👍 Перейти к сайту можно по ссылке ' + setting.website,
                          reply_markup=markup2, parse_mode='Markdown')
     elif message.text == '📢 Вакансии':
+        logging.info('Открыт раздел Вакансии, юзер - ' + message.chat.username)
         markup = types.ReplyKeyboardMarkup(resize_keyboard=True, row_width=1)
         btn1 = types.KeyboardButton('Менеджер по продажам (Sales Manager)')
         btn2 = types.KeyboardButton('UI/UX дизайнер')
@@ -151,6 +158,7 @@ def get_text_messages(message):
         bot.send_message(message.from_user.id, '⬇ Открытые вакансии', reply_markup=markup)
 
     elif message.text == 'Менеджер по продажам (Sales Manager)':
+        logging.info('Открыт раздел Менеджер по продажам, юзер - ' + message.chat.username)
         markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
         btn1 = types.KeyboardButton('🔙 Главное меню')
         markup.add(btn1)
@@ -161,6 +169,7 @@ def get_text_messages(message):
                          reply_markup=markup2, parse_mode='Markdown')
 
     elif message.text == 'UI/UX дизайнер':
+        logging.info('Открыт раздел дизайнер, юзер - ' + message.chat.username)
         markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
         btn1 = types.KeyboardButton('🔙 Главное меню')
         markup.add(btn1)
@@ -171,6 +180,7 @@ def get_text_messages(message):
                          reply_markup=markup2, parse_mode='Markdown')
 
     elif message.text == 'Разработчик Fullstack':
+        logging.info('Открыт раздел Разработчик, юзер - ' + message.chat.username)
         markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
         btn1 = types.KeyboardButton('🔙 Главное меню')
         markup.add(btn1)
@@ -181,6 +191,7 @@ def get_text_messages(message):
                          reply_markup=markup2, parse_mode='Markdown')
 
     elif message.text == '📁 Проекты':
+        logging.info('Открыт раздел Проекты, юзер - ' + message.chat.username)
         markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
         btn1 = types.KeyboardButton('🔙 Главное меню')
         markup.add(btn1)
@@ -191,6 +202,7 @@ def get_text_messages(message):
                          reply_markup=markup2, parse_mode='Markdown')
 
     elif message.text == '📚 Блог':
+        logging.info('Открыт раздел Блог, юзер - ' + message.chat.username)
         markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
         btn1 = types.KeyboardButton('🔙 Главное меню')
         markup.add(btn1)
@@ -217,6 +229,7 @@ def get_text_messages(message):
         bot.send_message(message.from_user.id, "👀 Выбери интересующий раздел", reply_markup=markup)
 
     elif message.text == '👥 Мы в ВК':
+        logging.info('Открыт раздел ВК, юзер -' + message.chat.username)
         markup = types.ReplyKeyboardMarkup(resize_keyboard=True, row_width=1)
         btn1 = types.KeyboardButton('🕵🏼 Написать Даше (HR компании)')
         btn2 = types.KeyboardButton('✏️ Написать нам')
@@ -247,17 +260,59 @@ def get_text_messages(message):
     elif message.text == 'как дела':
         bot.send_message(message.from_user.id, 'Хорошо!')
 
+    elif message.text == 'отмена':
+        bot.send_message(message.from_user.id, 'Отменено пользователем!')
+        start()
+
+    elif message.text == 'Отмена':
+        bot.send_message(message.from_user.id, 'Отменено пользователем!')
+        start()
+
+    elif message.text == '/stop':
+        bot.send_message(message.from_user.id, 'Отменено пользователем!')
+        start()
+
     elif message.text == 'Заявка':
         markup = types.ReplyKeyboardMarkup(resize_keyboard=True, row_width=2)
         btn2 = types.KeyboardButton('📢 Вакансии')
         btn5 = types.KeyboardButton('📝 Оставить заявку')
-        bot.send_message(message.from_user.id, 'Оставьте заявку для дальнейшего собеседования')
+        bot.send_message(message.from_user.id, 'Оставьте заявку для дальнейшего собеседования', reply_markup=markup)
+        markup.add(btn2, btn5)
 
     elif message.text == 'заявка':
         markup = types.ReplyKeyboardMarkup(resize_keyboard=True, row_width=2)
         btn2 = types.KeyboardButton('📢 Вакансии')
         btn5 = types.KeyboardButton('📝 Оставить заявку')
-        bot.send_message(message.from_user.id, 'Оставьте заявку для дальнейшего собеседования')
+        bot.send_message(message.from_user.id, 'Оставьте заявку для дальнейшего собеседования', reply_markup=markup)
+        markup.add(btn2, btn5)
+
+    elif message.text == 'собеседование':
+        markup = types.ReplyKeyboardMarkup(resize_keyboard=True, row_width=2)
+        btn2 = types.KeyboardButton('📢 Вакансии')
+        btn5 = types.KeyboardButton('📝 Оставить заявку')
+        bot.send_message(message.from_user.id, 'Оставьте заявку для дальнейшего собеседования', reply_markup=markup)
+        markup.add(btn2, btn5)
+
+    elif message.text == 'работа':
+        markup = types.ReplyKeyboardMarkup(resize_keyboard=True, row_width=2)
+        btn2 = types.KeyboardButton('📢 Вакансии')
+        btn5 = types.KeyboardButton('📝 Оставить заявку')
+        bot.send_message(message.from_user.id, 'Оставьте заявку для дальнейшего собеседования', reply_markup=markup)
+        markup.add(btn2, btn5)
+
+    elif message.text == 'вакансии':
+        markup = types.ReplyKeyboardMarkup(resize_keyboard=True, row_width=2)
+        btn2 = types.KeyboardButton('📢 Вакансии')
+        btn5 = types.KeyboardButton('📝 Оставить заявку')
+        bot.send_message(message.from_user.id, 'Оставьте заявку для дальнейшего собеседования', reply_markup=markup)
+        markup.add(btn2, btn5)
+
+    elif message.text == 'хочу на собеседование':
+        markup = types.ReplyKeyboardMarkup(resize_keyboard=True, row_width=2)
+        btn2 = types.KeyboardButton('📢 Вакансии')
+        btn5 = types.KeyboardButton('📝 Оставить заявку')
+        bot.send_message(message.from_user.id, 'Оставьте заявку для дальнейшего собеседования', reply_markup=markup)
+        markup.add(btn2, btn5)
 
     elif message.text == 'пока':
         bot.send_message(message.from_user.id, 'Всего доброго, заходите еще')
@@ -276,6 +331,7 @@ def get_text_messages(message):
                          parse_mode='Markdown')
 
     elif message.text == '🕵🏼 Написать Даше (HR компании)':
+        logging.info('Открыт раздел Написать Даше, юзер - ' + message.chat.username)
         markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
         btn1 = types.KeyboardButton('🔙 Главное меню')
         markup.add(btn1)
@@ -292,6 +348,7 @@ def get_text_messages(message):
                          reply_markup=markup, parse_mode='Markdown')
 
     elif message.text == '✍️️ Мы на LinkedIn':
+        logging.info('Открыт раздел LinkedIn, юзер - ' + message.chat.username)
         markup = types.ReplyKeyboardMarkup(resize_keyboard=True, row_width=1)
         btn1 = types.KeyboardButton('🔙 Главное меню')
         markup.add(btn1)
@@ -301,6 +358,7 @@ def get_text_messages(message):
                          reply_markup=markup2, parse_mode='Markdown')
 
     elif message.text == '🅱️ Мы на Behance':
+        logging.info('Открыт раздел Behance, юзер - ' + message.chat.username)
         markup = types.ReplyKeyboardMarkup(resize_keyboard=True, row_width=1)
         btn1 = types.KeyboardButton('🔙 Главное меню')
         markup.add(btn1)
@@ -312,6 +370,7 @@ def get_text_messages(message):
                          reply_markup=markup2, parse_mode='Markdown')
 
     elif message.text == '📸 Мы в Instagram':
+        logging.info('Открыт раздел Instagram, юзер - ' + message.chat.username)
         markup = types.ReplyKeyboardMarkup(resize_keyboard=True, row_width=1)
         btn1 = types.KeyboardButton('🔙 Главное меню')
         markup.add(btn1)
@@ -324,6 +383,7 @@ def get_text_messages(message):
                          reply_markup=markup2, parse_mode='Markdown')
 
     elif message.text == '🔥 Мы на Хабр':
+        logging.info('Открыт раздел Хабр, юзер - ' + message.chat.username)
         markup = types.ReplyKeyboardMarkup(resize_keyboard=True, row_width=1)
         btn1 = types.KeyboardButton('🔙 Главное меню')
         btn2 = types.KeyboardButton('Страница компании')
@@ -345,6 +405,7 @@ def get_text_messages(message):
                          reply_markup=markup, parse_mode='Markdown')
 
     elif message.text == '📝 Оставить заявку':
+        logging.info('Старт заявки' + message.chat.username)
         chat_id = message.chat.id
         msg = bot.send_message(chat_id, "Добрый день, представьтесь пожалуйста.")
         bot.register_next_step_handler(msg, name_step)
@@ -470,10 +531,6 @@ def send_z(message):
     app_text.append(z)
     user = user_dict[chat_id]
     user_chats = message.from_user.id
-    # us_id = message.from_user.id
-    # us_f_name = message.from_user.first_name
-    # us_l_sname = message.from_user.last_name
-    # username = message.from_user.username
     bot.send_message(setting.admin_id_ugraswim, f'Поступил новый отклик от {app_name_first[0]} {app_name_last[0]} !\n'
                      + f'username в тг = @{app_username[0]} \n'
                      + f'Возраст  -  {user.age} \n'
@@ -486,18 +543,18 @@ def send_z(message):
                      + f'Контактные данные: {user.nums} \n'
 
                      + f'ID юзера: {user_chats}')
-    bot.send_message(setting.admin_hr_id, f'Поступил новый отклик от {app_name_first[0]} {app_name_last[0]} !\n'
-                     + f'username в тг = @{app_username[0]} \n'
-                     + f'Возраст  -  {user.age} \n'
-                     + f'Локация  -  {user.location} \n'
-                     + f'Опыт работы  -  {user.experience} \n'
-                     + f'Специализация: {user.languages} \n'
-                     + f'Основные навыки: - {app_text[0]} \n'
-                     + f'Профиль github/социальная сеть  -  {user.git_acc} \n'
-                     + f'Формат работы  -  {user.format_work} \n'
-                     + f'Контактные данные: {user.nums} \n'
-
-                     + f'ID юзера: {user_chats}')
+    # bot.send_message(setting.admin_hr_id, f'Поступил новый отклик от {app_name_first[0]} {app_name_last[0]} !\n'
+    #                  + f'username в тг = @{app_username[0]} \n'
+    #                  + f'Возраст  -  {user.age} \n'
+    #                  + f'Локация  -  {user.location} \n'
+    #                  + f'Опыт работы  -  {user.experience} \n'
+    #                  + f'Специализация: {user.languages} \n'
+    #                  + f'Основные навыки: - {app_text[0]} \n'
+    #                  + f'Профиль github/социальная сеть  -  {user.git_acc} \n'
+    #                  + f'Формат работы  -  {user.format_work} \n'
+    #                  + f'Контактные данные: {user.nums} \n'
+    #
+    #                  + f'ID юзера: {user_chats}')
     conn = sqlite3.connect('bd/batabase.db')
     cursor = conn.cursor()
     user = user_dict[chat_id]
@@ -526,12 +583,13 @@ def send_z(message):
         conn.commit()
     else:
         print("Такой ID пользователя уже есть в базе данных")
+        logging.warning('Хотел оставить заявку, но уже оставлял - ' + message.chat.username)
     app_name_first.clear()
     app_name_last.clear()
     app_username.clear()
     app_text.clear()
+    logging.info('Заявка успешно отправлена от - ' + message.chat.username)
     bot.send_message(chat_id, "Заявка отправлена, мы свяжемся с Вами в ближайшее время")
-
 
 try:
     bot.infinity_polling(timeout=90, long_polling_timeout=5)
