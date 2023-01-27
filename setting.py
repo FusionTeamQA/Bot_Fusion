@@ -1,4 +1,6 @@
 token = '5975275814:AAGkgWEqk3XQX25fbXIswWstgUSWIWfpe2M'
+token_test = '5711969178:AAEXr5Ta-fpZGt7-RNc8NjnnZqkdvrGkWOQ'
+
 admin_id_ugraswim = 597010493
 admin_hr_id = 563921309
 # admin_kate_id =
