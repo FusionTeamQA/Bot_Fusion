@@ -143,7 +143,7 @@ def get_text_messages(message):
         markup2.add(types.InlineKeyboardButton("Посетить веб-сайт", setting.website))
         bot.send_message(message.from_user.id,
                          'Наша гордость - наша история.👍 Перейти к сайту можно по ссылке ' + setting.website,
-                         reply_markup=markup2, parse_mode='Markdown')
+                         reply_markup=markup2, parse_mode='HTML')
     elif message.text == '📢 Вакансии':
         logging.info('Открыт раздел Вакансии, юзер - ' + message.chat.username)
         markup = types.ReplyKeyboardMarkup(resize_keyboard=True, row_width=1)
@@ -154,7 +154,7 @@ def get_text_messages(message):
         markup.add(btn1, btn2, btn3, btn4)
         bot.send_message(message.from_user.id,
                          'Раздел: 📢 Вакансии\n \n👍🏻 Хочешь создавать лучшее?\n Тогда нам по пути! \n📲 Перейти к разделу можно по ссылке ' + setting.vacansies,
-                         reply_markup=markup, parse_mode='Markdown')
+                         reply_markup=markup, parse_mode='HTML')
         bot.send_message(message.from_user.id, '⬇ Открытые вакансии', reply_markup=markup)
 
     elif message.text == 'Менеджер по продажам (Sales Manager)':
@@ -166,7 +166,7 @@ def get_text_messages(message):
         markup2.add(types.InlineKeyboardButton("Открыть вакансию", setting.SALES_MANAGER))
         bot.send_message(message.from_user.id,
                          'Менеджер по продажам (Sales Manager) -->>> Перейти к вакансии можно по ссылке ' + setting.SALES_MANAGER,
-                         reply_markup=markup2, parse_mode='Markdown')
+                         reply_markup=markup2, parse_mode='HTML')
 
     elif message.text == 'UI/UX дизайнер':
         logging.info('Открыт раздел дизайнер, юзер - ' + message.chat.username)
@@ -177,7 +177,7 @@ def get_text_messages(message):
         markup2.add(types.InlineKeyboardButton("Открыть вакансию", setting.DESIGN))
         bot.send_message(message.from_user.id,
                          'UI/UX дизайнер -->>> Перейти к разделу можно по ссылке ' + setting.DESIGN,
-                         reply_markup=markup2, parse_mode='Markdown')
+                         reply_markup=markup2, parse_mode='HTML')
 
     elif message.text == 'Разработчик Fullstack':
         logging.info('Открыт раздел Разработчик, юзер - ' + message.chat.username)
@@ -188,7 +188,7 @@ def get_text_messages(message):
         markup2.add(types.InlineKeyboardButton("Открыть вакансию", setting.DEV_FULL))
         bot.send_message(message.from_user.id,
                          'Разработчик Fullstack -->>> Перейти к разделу можно по ссылке ' + setting.DEV_FULL,
-                         reply_markup=markup2, parse_mode='Markdown')
+                         reply_markup=markup2, parse_mode='HTML')
 
     elif message.text == '📁 Проекты':
         logging.info('Открыт раздел Проекты, юзер - ' + message.chat.username)
@@ -199,7 +199,7 @@ def get_text_messages(message):
         markup2.add(types.InlineKeyboardButton("Посмотреть наши проекты", setting.projects))
         bot.send_message(message.from_user.id,
                          'Раздел: 🚀 Проекты\n \n👍🏻📲 Перейти к разделу можно по ссылке ' + setting.projects,
-                         reply_markup=markup2, parse_mode='Markdown')
+                         reply_markup=markup2, parse_mode='HTML')
 
     elif message.text == '📚 Блог':
         logging.info('Открыт раздел Блог, юзер - ' + message.chat.username)
@@ -210,7 +210,7 @@ def get_text_messages(message):
         markup2.add(types.InlineKeyboardButton("Почитать наш блог", setting.blog))
         bot.send_message(message.from_user.id,
                          'Раздел: 📚 Блог\n \n👍🏻 Свежие новости студии, работа и идеи\n \n📲 Перейти к разделу можно по ссылке ' + setting.blog,
-                         reply_markup=markup2, parse_mode='Markdown')
+                         reply_markup=markup2, parse_mode='HTML')
 
     elif message.text == '🔙 Главное меню':
         markup = types.ReplyKeyboardMarkup(resize_keyboard=True, row_width=2)
@@ -238,7 +238,7 @@ def get_text_messages(message):
         bot.send_message(message.from_user.id, '⬇ Выбери то, что тебе интересно', reply_markup=markup)
         bot.send_message(message.from_user.id,
                          'Перейти к группе ВК можно по ссылке ' + setting.VK,
-                         reply_markup=markup, parse_mode='Markdown')
+                         reply_markup=markup, parse_mode='HTML')
     # Small talk
 
 
@@ -323,12 +323,12 @@ def get_text_messages(message):
     elif message.text == 'Новости':
         bot.send_message(message.from_user.id,
                          'Раздел: 📚 Блог\n \n👍🏻 Свежие новости студии, работа и идеи\n \n📲 Перейти к разделу можно по ссылке ' + setting.blog,
-                         parse_mode='Markdown')
+                         parse_mode='HTML')
 
     elif message.text == 'новости':
         bot.send_message(message.from_user.id,
                          'Раздел: 📚 Блог\n \n👍🏻 Свежие новости студии, работа и идеи\n \n📲 Перейти к разделу можно по ссылке ' + setting.blog,
-                         parse_mode='Markdown')
+                         parse_mode='HTML')
 
     elif message.text == '🕵🏼 Написать Даше (HR компании)':
         logging.info('Открыт раздел Написать Даше, юзер - ' + message.chat.username)
@@ -337,7 +337,7 @@ def get_text_messages(message):
         markup.add(btn1)
         bot.send_message(message.from_user.id,
                          'По вопросу трудоустройства и стажировок пиши в сообщество, нашему HR Дарье по ссылке ' + setting.VK_HR,
-                         reply_markup=markup, parse_mode='Markdown')
+                         reply_markup=markup, parse_mode='HTML')
 
     elif message.text == '✏️ Написать нам':
         markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
@@ -345,7 +345,7 @@ def get_text_messages(message):
         markup.add(btn1)
         bot.send_message(message.from_user.id,
                          'По общим вопросам пиши нам в сообщество, по ссылке ' + setting.VK_GROUP_CHAT,
-                         reply_markup=markup, parse_mode='Markdown')
+                         reply_markup=markup, parse_mode='HTML')
 
     elif message.text == '✍️️ Мы на LinkedIn':
         logging.info('Открыт раздел LinkedIn, юзер - ' + message.chat.username)
@@ -355,7 +355,7 @@ def get_text_messages(message):
         markup2 = types.InlineKeyboardMarkup()
         markup2.add(types.InlineKeyboardButton("Перейти к нам на страницу", setting.LINKEDIN))
         bot.send_message(message.from_user.id, '\n Перейти к разделу можно по ссылке ' + setting.LINKEDIN,
-                         reply_markup=markup2, parse_mode='Markdown')
+                         reply_markup=markup2, parse_mode='HTML')
 
     elif message.text == '🅱️ Мы на Behance':
         logging.info('Открыт раздел Behance, юзер - ' + message.chat.username)
@@ -367,7 +367,7 @@ def get_text_messages(message):
         bot.send_message(message.from_user.id,
                          'With our expertise,we can suggest the best solutions for your project to make it as good as possible.'
                          '\n Перейти к разделу можно по ссылке ' + setting.BEHANCE,
-                         reply_markup=markup2, parse_mode='Markdown')
+                         reply_markup=markup2, parse_mode='HTML')
 
     elif message.text == '📸 Мы в Instagram':
         logging.info('Открыт раздел Instagram, юзер - ' + message.chat.username)
@@ -380,7 +380,7 @@ def get_text_messages(message):
                          '🏆ТОП-100 работодателей России // Хабр Карьера'
                          '\n📍Taganrog // Yerevan // Claymont'
                          '\n Перейти к разделу можно по ссылке ' + setting.INSTAGRAM,
-                         reply_markup=markup2, parse_mode='Markdown')
+                         reply_markup=markup2, parse_mode='HTML')
 
     elif message.text == '🔥 Мы на Хабр':
         logging.info('Открыт раздел Хабр, юзер - ' + message.chat.username)
@@ -392,7 +392,7 @@ def get_text_messages(message):
         bot.send_message(message.from_user.id,
                          'Найди работу по душе 🎉 \n В базе Хабр Карьеры всегда актуальные вакансии компании'
                          '\n Перейти к разделу можно по ссылке ' + setting.HABR,
-                         reply_markup=markup, parse_mode='Markdown')
+                         reply_markup=markup, parse_mode='HTML')
 
     elif message.text == 'Страница компании':
         markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
@@ -402,7 +402,7 @@ def get_text_messages(message):
                          "Мы Fusion Tech - компания, уже более 5-ти лет предоставляющая качественные веб и мобильные продукты, клиентский сервис, а также пропуск в мир IT через бесплатную стажировку в компании под наставничеством опытных кураторов.")
         bot.send_message(message.from_user.id,
                          'Почитать более подробно, а также подписаться на нашу компанию можно по ссылке ' + setting.HABR,
-                         reply_markup=markup, parse_mode='Markdown')
+                         reply_markup=markup, parse_mode='HTML')
 
     elif message.text == '📝 Оставить заявку':
         logging.info('Старт заявки' + message.chat.username)
