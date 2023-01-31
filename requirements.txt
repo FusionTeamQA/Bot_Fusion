@@ -1,1 +1,4 @@
+lxml==4.6.3
+plyer==2.0.0
 pyTelegramBotAPI==3.8.2
+requests==2.26.0
