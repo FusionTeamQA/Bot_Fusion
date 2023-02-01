@@ -11,7 +11,7 @@ logging.basicConfig(format='%(asctime)s - %(levelname)s - %(message)s',
                     level=logging.INFO,
                     filename='bot.log'
                     )
-bot = telebot.TeleBot(setting.token)
+bot = telebot.TeleBot(setting.token_test)
 
 user_dict = {}
 user_chats = 0
