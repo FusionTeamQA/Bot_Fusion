@@ -34,7 +34,7 @@ class User:
 
 @bot.message_handler(commands=['start'])  # стартовая команда
 def start(message):
-    conn = sqlite3.connect('bd/batabase.db')
+    conn = sqlite3.connect('bd/database_fusion.db')
     cursor = conn.cursor()
     cursor.execute('''CREATE TABLE IF NOT EXISTS users(
         id INTEGER, 
@@ -555,7 +555,7 @@ def send_z(message):
     #                  + f'Контактные данные: {user.nums} \n'
     #
     #                  + f'ID юзера: {user_chats}')
-    conn = sqlite3.connect('bd/batabase.db')
+    conn = sqlite3.connect('bd/database_fusion.db')
     cursor = conn.cursor()
     user = user_dict[chat_id]
     cursor.execute('''CREATE TABLE IF NOT EXISTS orders(
