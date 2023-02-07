@@ -32,7 +32,7 @@ class User:
             self.key = None
 
 
-@bot.message_handler(commands=['start'])  # стартовая команда
+@bot.message_handler(commands=['start'])  # стартовая команда заппуска
 def start(message):
     conn = sqlite3.connect('bd/database_fusion.db')
     cursor = conn.cursor()
