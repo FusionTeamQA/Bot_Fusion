@@ -62,9 +62,11 @@ def start(message):
     markup.add(btn1)
     bot.send_message(message.from_user.id, "🇷🇺 Выберите язык / 🇬🇧 Choose your language", reply_markup=markup)
 
+
 @bot.message_handler(content_types=['sticker'])
 def send_sticker(message):
     print(message.sticker.file_id)
+
 
 @bot.message_handler(content_types=['text'])
 def get_text_messages(message):
@@ -150,8 +152,9 @@ def get_text_messages(message):
         btn1 = types.KeyboardButton('Менеджер по продажам (Sales Manager)')
         btn2 = types.KeyboardButton('UI/UX дизайнер')
         btn3 = types.KeyboardButton('Разработчик Fullstack')
+        btn5 = types.KeyboardButton('Специалист по тендерам')
         btn4 = types.KeyboardButton('🔙 Главное меню')
-        markup.add(btn1, btn2, btn3, btn4)
+        markup.add(btn1, btn2, btn3, btn5, btn4)
         bot.send_message(message.from_user.id,
                          'Раздел: 📢 Вакансии\n \n👍🏻 Хочешь создавать лучшее?\n Тогда нам по пути! \n📲 Перейти к разделу можно по ссылке ' + setting.vacansies,
                          reply_markup=markup, parse_mode='HTML')
@@ -188,6 +191,28 @@ def get_text_messages(message):
         markup2.add(types.InlineKeyboardButton("Открыть вакансию", setting.DEV_FULL))
         bot.send_message(message.from_user.id,
                          'Разработчик Fullstack -->>> Перейти к разделу можно по ссылке ' + setting.DEV_FULL,
+                         reply_markup=markup2, parse_mode='HTML')
+
+    elif message.text == 'Специалист по тендерам':
+        logging.info('Открыт раздел Специалист по тендерам, юзер - ' + message.chat.username)
+        markup = types.ReplyKeyboardMarkup(resize_keyboard=True, row_width=1)
+        btn1 = types.KeyboardButton('🔙 Главное меню')
+        btn2 = types.KeyboardButton('📝 Оставить заявку')
+        btn3 = types.KeyboardButton('🕵🏼 Написать Даше (HR компании)')
+        markup.add(btn1,btn2,btn3)
+        markup2 = types.InlineKeyboardMarkup()
+        markup2.add(types.InlineKeyboardButton("Откликнуться", setting.VK_HR))
+        bot.send_message(message.from_user.id,
+                         'У нас открылась еще одна интересная вакансия, но уже для более опытных соискателей - '
+                         'специалист по тендерам. Обязанности стандартны - поиск тендеров и аукционов, '
+                         'аналитика и оценка выгоды сотрудничества,'
+                         'работа с электронными торговыми площадками, электронными аукционами и сопроводительной '
+                         'документацией',
+                         reply_markup=markup, parse_mode='HTML')
+        bot.send_message(message.from_user.id,
+                         'Оставьте заявку для дальнейшего собеседования или по всем вопросам и деталям пиши '
+                         'Даше сюда --->>>'
+                         + setting.VK_HR,
                          reply_markup=markup2, parse_mode='HTML')
 
     elif message.text == '📁 Проекты':
@@ -241,7 +266,6 @@ def get_text_messages(message):
                          reply_markup=markup, parse_mode='HTML')
     # Small talk
 
-
     elif message.text == 'Привет!':
         bot.send_message(message.from_user.id, 'Привет!')
 
@@ -259,18 +283,6 @@ def get_text_messages(message):
 
     elif message.text == 'как дела':
         bot.send_message(message.from_user.id, 'Хорошо!')
-
-    elif message.text == 'отмена':
-        bot.send_message(message.from_user.id, 'Отменено пользователем!')
-        start()
-
-    elif message.text == 'Отмена':
-        bot.send_message(message.from_user.id, 'Отменено пользователем!')
-        start()
-
-    elif message.text == '/stop':
-        bot.send_message(message.from_user.id, 'Отменено пользователем!')
-        start()
 
     elif message.text == 'Заявка':
         markup = types.ReplyKeyboardMarkup(resize_keyboard=True, row_width=2)
@@ -335,17 +347,21 @@ def get_text_messages(message):
         markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
         btn1 = types.KeyboardButton('🔙 Главное меню')
         markup.add(btn1)
+        markup2 = types.InlineKeyboardMarkup()
+        markup2.add(types.InlineKeyboardButton("Откликнуться", setting.VK_HR))
         bot.send_message(message.from_user.id,
                          'По вопросу трудоустройства и стажировок пиши в сообщество, нашему HR Дарье по ссылке ' + setting.VK_HR,
-                         reply_markup=markup, parse_mode='HTML')
+                         reply_markup=markup2, parse_mode='HTML')
 
     elif message.text == '✏️ Написать нам':
         markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
         btn1 = types.KeyboardButton('🔙 Главное меню')
         markup.add(btn1)
+        markup2 = types.InlineKeyboardMarkup()
+        markup2.add(types.InlineKeyboardButton("Написать нам в ВКонтакте", setting.VK_GROUP_CHAT))
         bot.send_message(message.from_user.id,
                          'По общим вопросам пиши нам в сообщество, по ссылке ' + setting.VK_GROUP_CHAT,
-                         reply_markup=markup, parse_mode='HTML')
+                         reply_markup=markup2, parse_mode='HTML')
 
     elif message.text == '✍️️ Мы на LinkedIn':
         logging.info('Открыт раздел LinkedIn, юзер - ' + message.chat.username)
@@ -407,17 +423,23 @@ def get_text_messages(message):
     elif message.text == '📝 Оставить заявку':
         logging.info('Старт заявки' + message.chat.username)
         chat_id = message.chat.id
-        msg = bot.send_message(chat_id, "Добрый день, представьтесь пожалуйста.")
+        board = types.InlineKeyboardMarkup()
+        cancel = types.InlineKeyboardButton(text="Отменить заявку", callback_data="Отмена")
+        board.add(cancel)
+        msg = bot.send_message(chat_id, "Добрый день, представьтесь пожалуйста.", reply_markup=board)
         bot.register_next_step_handler(msg, name_step)
 
 
 def name_step(message, user=None):
     try:
+        board = types.InlineKeyboardMarkup()
+        cancel = types.InlineKeyboardButton(text="Отменить заявку", callback_data="Отмена")
+        board.add(cancel)
         chat_id = message.chat.id
         name = message.text
         user = User(name)
         user_dict[chat_id] = user
-        msg = bot.send_message(chat_id, "Укажите ваш возраст")
+        msg = bot.send_message(chat_id, "Укажите ваш возраст", reply_markup=board)
         bot.register_next_step_handler(msg, process_age_step)
     except Exception as e:
         bot.reply_to(message, 'oooops')
@@ -425,6 +447,9 @@ def name_step(message, user=None):
 
 def process_age_step(message):
     try:
+        board = types.InlineKeyboardMarkup()
+        cancel = types.InlineKeyboardButton(text="Отменить заявку", callback_data="Отмена")
+        board.add(cancel)
         chat_id = message.chat.id
         age = message.text
         if not age.isdigit():
@@ -433,8 +458,7 @@ def process_age_step(message):
             return
         user = user_dict[chat_id]
         user.age = age
-        msg = bot.send_message(chat_id, 'К какой специализации вы относитесь?', )
-
+        msg = bot.send_message(chat_id, 'К какой специализации вы относитесь?', reply_markup=board )
         bot.register_next_step_handler(msg, process_spec_step)
     except Exception as e:
         bot.reply_to(message, 'oooops')
@@ -442,11 +466,14 @@ def process_age_step(message):
 
 def process_spec_step(message):
     try:
+        board = types.InlineKeyboardMarkup()
+        cancel = types.InlineKeyboardButton(text="Отменить заявку", callback_data="Отмена")
+        board.add(cancel)
         chat_id = message.chat.id
         language = message.text
         user = user_dict[chat_id]
         user.languages = language
-        msg = bot.send_message(chat_id, 'Локация')
+        msg = bot.send_message(chat_id, 'Локация', reply_markup=board)
         bot.register_next_step_handler(msg, process_location_step)
     except Exception as e:
         bot.reply_to(message, 'Непредвиденная ошибка')
@@ -454,11 +481,14 @@ def process_spec_step(message):
 
 def process_location_step(message):
     try:
+        board = types.InlineKeyboardMarkup()
+        cancel = types.InlineKeyboardButton(text="Отменить заявку", callback_data="Отмена")
+        board.add(cancel)
         chat_id = message.chat.id
         location = message.text
         user = user_dict[chat_id]
         user.location = location
-        msg = bot.send_message(chat_id, 'Формат работы (удаленно/офис)')
+        msg = bot.send_message(chat_id, 'Формат работы (удаленно/офис)', reply_markup=board)
         bot.register_next_step_handler(msg, process_format_work_step)
     except Exception as e:
         bot.reply_to(message, 'Непредвиденная ошибка')
@@ -466,11 +496,14 @@ def process_location_step(message):
 
 def process_format_work_step(message):
     try:
+        board = types.InlineKeyboardMarkup()
+        cancel = types.InlineKeyboardButton(text="Отменить заявку", callback_data="Отмена")
+        board.add(cancel)
         chat_id = message.chat.id
         format_work = message.text
         user = user_dict[chat_id]
         user.format_work = format_work
-        msg = bot.send_message(chat_id, 'Опыт работы?')
+        msg = bot.send_message(chat_id, 'Опыт работы?', reply_markup=board)
         bot.register_next_step_handler(msg, process_experience_step)
     except Exception as e:
         bot.reply_to(message, 'Непредвиденная ошибка')
@@ -478,12 +511,15 @@ def process_format_work_step(message):
 
 def process_experience_step(message):
     try:
+        board = types.InlineKeyboardMarkup()
+        cancel = types.InlineKeyboardButton(text="Отменить заявку", callback_data="Отмена")
+        board.add(cancel)
         chat_id = message.chat.id
         experience = message.text
         user = user_dict[chat_id]
         user.experience = experience
         msg = bot.send_message(chat_id,
-                               'Вставьте ссылку на ваш профиль(GitHub,Behance,Dribbble,Figma,VK) если нет - напишите нет: ')
+                               'Вставьте ссылку на ваш профиль(GitHub,Behance,Dribbble,Figma,VK) если нет - напишите нет: ', reply_markup=board)
         bot.register_next_step_handler(msg, process_git_acc_step)
     except Exception as e:
         bot.reply_to(message, 'Непредвиденная ошибка')
@@ -491,11 +527,17 @@ def process_experience_step(message):
 
 def process_git_acc_step(message):
     try:
+        board = types.InlineKeyboardMarkup()
+        cancel = types.InlineKeyboardButton(text="Отменить заявку", callback_data="Отмена")
+        board.add(cancel)
+        board = types.InlineKeyboardMarkup()
+        cancel = types.InlineKeyboardButton(text="Отмена", callback_data="Отмена")
+        board.add(cancel)
         chat_id = message.chat.id
         git_acc1 = message.text
         user = user_dict[chat_id]
         user.git_acc = git_acc1
-        msg = bot.send_message(chat_id, "Контактные данные")
+        msg = bot.send_message(chat_id, "Контактные данные", reply_markup=board)
         bot.register_next_step_handler(msg, contnums)
 
     except Exception as e:
@@ -504,12 +546,15 @@ def process_git_acc_step(message):
 
 def contnums(message):
     try:
+        board = types.InlineKeyboardMarkup()
+        cancel = types.InlineKeyboardButton(text="Отменить заявку", callback_data="Отмена")
+        board.add(cancel)
         chat_id = message.chat.id
         nums = message.text
         user = user_dict[chat_id]
         user.nums = nums
         chat_id = message.chat.id
-        msg = bot.send_message(chat_id, "Основные навыки")
+        msg = bot.send_message(chat_id, "Основные навыки", reply_markup=board)
         bot.register_next_step_handler(msg, send_z)
     except Exception as e:
         bot.reply_to(message, 'Непредвиденная ошибка')
@@ -590,6 +635,17 @@ def send_z(message):
     app_text.clear()
     logging.info('Заявка успешно отправлена от - ' + message.chat.username)
     bot.send_message(chat_id, "Заявка отправлена, мы свяжемся с Вами в ближайшее время")
+
+
+@bot.callback_query_handler(func=lambda call: True)
+def callback_inline(call):
+    if call.message:
+        if call.data == "Отмена":
+            logging.warning('Хотел оставить заявку, нажал отмена - ' + call.message.chat.username)
+            msg = bot.edit_message_text(chat_id=call.message.chat.id, message_id=call.message.message_id,
+                                        text='Отмена заполнения заявки...👀 Выберите интересующий вас раздел')
+            bot.clear_step_handler(msg)
+
 
 try:
     bot.infinity_polling(timeout=90, long_polling_timeout=5)
