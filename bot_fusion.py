@@ -9,7 +9,7 @@ from requests.exceptions import ConnectionError, ReadTimeout
 
 logging.basicConfig(format='%(asctime)s - %(levelname)s - %(message)s',
                     level=logging.INFO,
-                    filename='bots.log'
+                    filename='bot.log'
                     )
 bot = telebot.TeleBot(setting.token)
 
@@ -643,7 +643,8 @@ def callback_inline(call):
         if call.data == "Отмена":
             logging.warning('Хотел оставить заявку, нажал отмена - ' + call.message.chat.username)
             msg = bot.edit_message_text(chat_id=call.message.chat.id, message_id=call.message.message_id,
-                                        text='Отмена заполнения заявки...👀 Выберите интересующий вас раздел')
+                                        text='Отмена заполнения заявки...')
+            msg = bot.edit_message_text(chat_id=call.message.chat.id, text= '👀 Выберите интересующий вас раздел')
             bot.clear_step_handler(msg)
 
 
