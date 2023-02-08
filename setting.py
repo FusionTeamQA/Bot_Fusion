@@ -1,4 +1,4 @@
-token = '5975275814:AAHC_5uzf4gNhiXr6bcysimle4kC4wUBN08'
+token = '5975275814:AAHTt5mXosotYJMTsky56c8Bp4L52_uhOgA'
 token_test = '5711969178:AAEXr5Ta-fpZGt7-RNc8NjnnZqkdvrGkWOQ'
 
 admin_id_ugraswim = 597010493
