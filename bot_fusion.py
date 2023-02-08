@@ -53,7 +53,6 @@ def start(message):
         cursor.execute("INSERT INTO users VALUES(?,?,?,?);", USER_ID)
         conn.commit()
     else:
-        print("Старт бота - Такой пользователь уже есть в базе данных")
         print(message.from_user.username)
 
     markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
@@ -72,7 +71,6 @@ def send_sticker(message):
 def get_text_messages(message):
     # Русский язык
     if message.text == '🇷🇺 Русский':
-        print('Посетил бот - ' + message.chat.username)
         logging.info('Start bot - ' + message.chat.username)
         print(message.chat.username)
         print('_____________________')
@@ -93,9 +91,6 @@ def get_text_messages(message):
         bot.send_message(message.from_user.id, '👀 Выберите интересующий вас раздел')
 
     if message.text == 'русский':
-        print('Посетил бот')
-        print(message.chat.username)
-        print('_____________________')
         markup = types.ReplyKeyboardMarkup(resize_keyboard=True, row_width=2)
         btn2 = types.KeyboardButton('📢 Вакансии')
         btn5 = types.KeyboardButton('📝 Оставить заявку')
@@ -113,7 +108,6 @@ def get_text_messages(message):
         bot.send_message(message.from_user.id, '👀 Выберите интересующий вас раздел')
 
     if message.text == 'Русский':
-        print('Посетил бот')
         print(message.chat.username)
         print('_____________________')
         markup = types.ReplyKeyboardMarkup(resize_keyboard=True, row_width=2)
@@ -627,7 +621,6 @@ def send_z(message):
         cursor.execute("INSERT INTO orders VALUES(?,?,?,?,?,?,?);", order)
         conn.commit()
     else:
-        print("Такой ID пользователя уже есть в базе данных")
         logging.warning('Хотел оставить заявку, но уже оставлял - ' + message.chat.username)
     app_name_first.clear()
     app_name_last.clear()
