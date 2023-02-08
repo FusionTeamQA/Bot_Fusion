@@ -636,16 +636,15 @@ def callback_inline(call):
         if call.data == "Отмена":
             logging.warning('Хотел оставить заявку, нажал отмена - ' + call.message.chat.username)
             msg = bot.edit_message_text(chat_id=call.message.chat.id, message_id=call.message.message_id,
-                                        text='Отмена заполнения заявки...')
-            msg = bot.edit_message_text(chat_id=call.message.chat.id, text= '👀 Выберите интересующий вас раздел')
+                                        text='Отмена заполнения заявки...Выберите нужный раздел:')
             bot.clear_step_handler(msg)
 
 
 try:
-    bot.infinity_polling(timeout=50, long_polling_timeout=5)
+    bot.infinity_polling(timeout=90, long_polling_timeout=5)
 except (ConnectionError, ReadTimeout) as e:
     sys.stdout.flush()
     logging.exception('Ошибка подключения. Переподключение')
     os.execv(sys.argv[0], sys.argv)
 else:
-    bot.infinity_polling(timeout=50, long_polling_timeout=5)
+    bot.infinity_polling(timeout=90, long_polling_timeout=5)
