@@ -9,7 +9,7 @@ from requests.exceptions import ConnectionError, ReadTimeout
 
 logging.basicConfig(format='%(asctime)s - %(levelname)s - %(message)s',
                     level=logging.INFO,
-                    filename='bot.log'
+                    filename='bots.log'
                     )
 bot = telebot.TeleBot(setting.token)
 
@@ -32,7 +32,7 @@ class User:
             self.key = None
 
 
-@bot.message_handler(commands=['start'])  # стартовая команда заппуска
+@bot.message_handler(commands=['start'])  # стартовая команда
 def start(message):
     conn = sqlite3.connect('bd/database_fusion.db')
     cursor = conn.cursor()
@@ -588,18 +588,18 @@ def send_z(message):
                      + f'Контактные данные: {user.nums} \n'
 
                      + f'ID юзера: {user_chats}')
-    bot.send_message(setting.admin_hr_id, f'Поступил новый отклик от {app_name_first[0]} {app_name_last[0]} !\n'
-                     + f'username в тг = @{app_username[0]} \n'
-                     + f'Возраст  -  {user.age} \n'
-                     + f'Локация  -  {user.location} \n'
-                     + f'Опыт работы  -  {user.experience} \n'
-                     + f'Специализация: {user.languages} \n'
-                     + f'Основные навыки: - {app_text[0]} \n'
-                     + f'Профиль github/социальная сеть  -  {user.git_acc} \n'
-                     + f'Формат работы  -  {user.format_work} \n'
-                     + f'Контактные данные: {user.nums} \n'
-
-                     + f'ID юзера: {user_chats}')
+    # bot.send_message(setting.admin_hr_id, f'Поступил новый отклик от {app_name_first[0]} {app_name_last[0]} !\n'
+    #                  + f'username в тг = @{app_username[0]} \n'
+    #                  + f'Возраст  -  {user.age} \n'
+    #                  + f'Локация  -  {user.location} \n'
+    #                  + f'Опыт работы  -  {user.experience} \n'
+    #                  + f'Специализация: {user.languages} \n'
+    #                  + f'Основные навыки: - {app_text[0]} \n'
+    #                  + f'Профиль github/социальная сеть  -  {user.git_acc} \n'
+    #                  + f'Формат работы  -  {user.format_work} \n'
+    #                  + f'Контактные данные: {user.nums} \n'
+    #
+    #                  + f'ID юзера: {user_chats}')
     conn = sqlite3.connect('bd/database_fusion.db')
     cursor = conn.cursor()
     user = user_dict[chat_id]
