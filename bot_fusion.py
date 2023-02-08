@@ -588,18 +588,18 @@ def send_z(message):
                      + f'Контактные данные: {user.nums} \n'
 
                      + f'ID юзера: {user_chats}')
-    # bot.send_message(setting.admin_hr_id, f'Поступил новый отклик от {app_name_first[0]} {app_name_last[0]} !\n'
-    #                  + f'username в тг = @{app_username[0]} \n'
-    #                  + f'Возраст  -  {user.age} \n'
-    #                  + f'Локация  -  {user.location} \n'
-    #                  + f'Опыт работы  -  {user.experience} \n'
-    #                  + f'Специализация: {user.languages} \n'
-    #                  + f'Основные навыки: - {app_text[0]} \n'
-    #                  + f'Профиль github/социальная сеть  -  {user.git_acc} \n'
-    #                  + f'Формат работы  -  {user.format_work} \n'
-    #                  + f'Контактные данные: {user.nums} \n'
-    #
-    #                  + f'ID юзера: {user_chats}')
+    bot.send_message(setting.admin_hr_id, f'Поступил новый отклик от {app_name_first[0]} {app_name_last[0]} !\n'
+                     + f'username в тг = @{app_username[0]} \n'
+                     + f'Возраст  -  {user.age} \n'
+                     + f'Локация  -  {user.location} \n'
+                     + f'Опыт работы  -  {user.experience} \n'
+                     + f'Специализация: {user.languages} \n'
+                     + f'Основные навыки: - {app_text[0]} \n'
+                     + f'Профиль github/социальная сеть  -  {user.git_acc} \n'
+                     + f'Формат работы  -  {user.format_work} \n'
+                     + f'Контактные данные: {user.nums} \n'
+
+                     + f'ID юзера: {user_chats}')
     conn = sqlite3.connect('bd/database_fusion.db')
     cursor = conn.cursor()
     user = user_dict[chat_id]
@@ -649,9 +649,10 @@ def callback_inline(call):
 
 
 try:
-    bot.infinity_polling(timeout=90, long_polling_timeout=5)
+    bot.infinity_polling(timeout=50, long_polling_timeout=5)
 except (ConnectionError, ReadTimeout) as e:
     sys.stdout.flush()
+    logging.exception('Ошибка подключения. Переподключение')
     os.execv(sys.argv[0], sys.argv)
 else:
-    bot.infinity_polling(timeout=90, long_polling_timeout=5)
+    bot.infinity_polling(timeout=50, long_polling_timeout=5)
