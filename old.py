@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 import telebot
+from datetime import datetime
 from telebot import types
 import setting
 import psycopg2
@@ -23,6 +24,9 @@ bot = telebot.TeleBot(setting.token_test)
 user_dict = {}
 user_chats = 0
 
+now = datetime.now()
+dt_string = now.strftime("%d/%m/%Y %H:%M")
+print("date and time =", dt_string)
 
 class User:
 
@@ -56,17 +60,17 @@ def start(message):
                             id INTEGER,
                             user_first_name varchar(50),
                             user_last_name varchar(50),
-                            username varchar(50)
+                            username varchar(50),
+                            data_time varchar(50)
                             )''')
         connection.commit()
-
         people_id = message.from_user.id
         cursor.execute(f"SELECT id FROM users WHERE id = {people_id}")
         data = cursor.fetchone()
         if data is None:
             USER_ID = [message.from_user.id, message.from_user.first_name, message.from_user.last_name,
-                       message.from_user.username]
-            cursor.execute("INSERT INTO users VALUES(%s,%s,%s,%s);", USER_ID)
+                       message.from_user.username, dt_string]
+            cursor.execute("INSERT INTO users VALUES(%s,%s,%s,%s,%s);", USER_ID)
             connection.commit()
         else:
             print(message.from_user.username)
@@ -75,12 +79,13 @@ def start(message):
                             id INTEGER,
                             user_first_name varchar(50),
                             user_last_name varchar(50),
-                            username varchar(50)
+                            username varchar(50),
+                            data_time varchar(50)
                             )''')
         connection.commit()
         USER_ID = [message.from_user.id, message.from_user.first_name, message.from_user.last_name,
-                       message.from_user.username]
-        cursor.execute("INSERT INTO users_session VALUES(%s,%s,%s,%s);", USER_ID)
+                       message.from_user.username, dt_string]
+        cursor.execute("INSERT INTO users_session VALUES(%s,%s,%s,%s,%s);", USER_ID)
         connection.commit()
         markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
         btn1 = types.KeyboardButton("🇷🇺 Русский")
@@ -632,7 +637,8 @@ def send_z(message):
                 username varchar(50),
                 location text,
                 special text,
-                nums text
+                nums text,
+                data_time varchar(50)
                 );''')
         connection.commit()
         id_people = message.from_user.id
@@ -646,8 +652,9 @@ def send_z(message):
                      message.from_user.username,
                      user.location,
                      user.languages,
-                     user.nums]
-            cursor.execute("INSERT INTO orders VALUES(%s,%s,%s,%s,%s,%s,%s);", order)
+                     user.nums,
+                     dt_string]
+            cursor.execute("INSERT INTO orders VALUES(%s,%s,%s,%s,%s,%s,%s,%s);", order)
             connection.commit()
             app_name_first.clear()
             app_name_last.clear()
