@@ -2,15 +2,22 @@
 import telebot
 from telebot import types
 import setting
-import sqlite3
+import psycopg2
 import logging
 import os, sys
+from config_db import host, user, password, db_name
 from requests.exceptions import ConnectionError, ReadTimeout
 
 logging.basicConfig(format='%(asctime)s - %(levelname)s - %(message)s',
                     level=logging.INFO,
                     filename='bot.log'
                     )
+
+# Загружаем список интересных фактов
+f = open('data/facts.txt', 'r', encoding='UTF-8')
+facts = f.read().split('\n')
+f.close()
+
 bot = telebot.TeleBot(setting.token)
 
 user_dict = {}
@@ -34,38 +41,58 @@ class User:
 
 @bot.message_handler(commands=['start'])  # стартовая команда
 def start(message):
-    conn = sqlite3.connect('bd/database_fusion.db')
-    cursor = conn.cursor()
-    cursor.execute('''CREATE TABLE IF NOT EXISTS users(
-        id INTEGER, 
-        user_first_name TEXT, 
-        user_last_name TEXT, 
-        username TEXT
-        )''')
-    conn.commit()
+    global connection, cursor
+    try:
+        connection = psycopg2.connect(
+            host=host,
+            user=user,
+            password=password,
+            dbname=db_name,
+        )
+        cursor = connection.cursor()
+        cursor.execute("SELECT version();")
+        print(f"Server version: + {cursor.fetchone()}")
+        cursor.execute('''CREATE TABLE IF NOT EXISTS users(
+                            id INTEGER,
+                            user_first_name varchar(50),
+                            user_last_name varchar(50),
+                            username varchar(50)
+                            )''')
+        connection.commit()
 
-    people_id = message.from_user.id
-    cursor.execute(f"SELECT id FROM users WHERE id = {people_id}")
-    data = cursor.fetchone()
-    if data is None:
+        people_id = message.from_user.id
+        cursor.execute(f"SELECT id FROM users WHERE id = {people_id}")
+        data = cursor.fetchone()
+        if data is None:
+            USER_ID = [message.from_user.id, message.from_user.first_name, message.from_user.last_name,
+                       message.from_user.username]
+            cursor.execute("INSERT INTO users VALUES(%s,%s,%s,%s);", USER_ID)
+            connection.commit()
+        else:
+            print(message.from_user.username)
+
+        cursor.execute('''CREATE TABLE IF NOT EXISTS users_session(
+                            id INTEGER,
+                            user_first_name varchar(50),
+                            user_last_name varchar(50),
+                            username varchar(50)
+                            )''')
+        connection.commit()
         USER_ID = [message.from_user.id, message.from_user.first_name, message.from_user.last_name,
-                   message.from_user.username]
-        cursor.execute("INSERT INTO users VALUES(?,?,?,?);", USER_ID)
-        conn.commit()
-    else:
-        print(message.from_user.username)
+                       message.from_user.username]
+        cursor.execute("INSERT INTO users_session VALUES(%s,%s,%s,%s);", USER_ID)
+        connection.commit()
+        markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
+        btn1 = types.KeyboardButton("🇷🇺 Русский")
+        btn2 = types.KeyboardButton('🇬🇧 English')
+        markup.add(btn1)
+        bot.send_message(message.from_user.id, "🇷🇺 Выберите язык / 🇬🇧 Choose your language", reply_markup=markup)
+    except Exception as _ex:
+        print("Error connect >>>", _ex)
 
-    markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
-    btn1 = types.KeyboardButton("🇷🇺 Русский")
-    btn2 = types.KeyboardButton('🇬🇧 English')
-    markup.add(btn1)
-    bot.send_message(message.from_user.id, "🇷🇺 Выберите язык / 🇬🇧 Choose your language", reply_markup=markup)
-
-
-@bot.message_handler(content_types=['sticker'])
-def send_sticker(message):
-    print(message.sticker.file_id)
-
+    finally:
+        if connection:
+            logging.info("Добавлен в базу данных Users")
 
 @bot.message_handler(content_types=['text'])
 def get_text_messages(message):
@@ -555,6 +582,7 @@ def contnums(message):
 
 
 def send_z(message):
+    global connection, cursor
     chat_id = message.chat.id
     first_name = message.chat.first_name
     last_name = message.chat.last_name
@@ -594,41 +622,48 @@ def send_z(message):
                      + f'Контактные данные: {user.nums} \n'
 
                      + f'ID юзера: {user_chats}')
-    conn = sqlite3.connect('bd/database_fusion.db')
-    cursor = conn.cursor()
-    user = user_dict[chat_id]
-    cursor.execute('''CREATE TABLE IF NOT EXISTS orders(
-            id INTEGER,
-            user_first_name TEXT,
-            user_last_name TEXT,
-            username TEXT
-            location TEXT
-            special TEXT
-            nums TEXT
-            );''')
-    conn.commit()
-    id_people = message.from_user.id
-    cursor.execute(f"SELECT id FROM orders WHERE id = {id_people}")
-    data = cursor.fetchone()
-    if data is None:
-        order = [message.from_user.id,
-                 message.from_user.first_name,
-                 message.from_user.last_name,
-                 message.from_user.username,
-                 user.location,
-                 user.languages,
-                 user.nums]
-        cursor.execute("INSERT INTO orders VALUES(?,?,?,?,?,?,?);", order)
-        conn.commit()
-    else:
-        logging.warning('Хотел оставить заявку, но уже оставлял - ' + message.chat.username)
-    app_name_first.clear()
-    app_name_last.clear()
-    app_username.clear()
-    app_text.clear()
-    logging.info('Заявка успешно отправлена от - ' + message.chat.username)
-    bot.send_message(chat_id, "Заявка отправлена, мы свяжемся с Вами в ближайшее время")
+    try:
+        cursor.execute("SELECT version();")
+        print(f"Server version: + {cursor.fetchone()}")
+        cursor.execute('''CREATE TABLE IF NOT EXISTS orders(
+                id INTEGER,
+                user_first_name varchar(50),
+                user_last_name varchar(50),
+                username varchar(50),
+                location text,
+                special text,
+                nums text
+                );''')
+        connection.commit()
+        id_people = message.from_user.id
+        cursor.execute(f"SELECT id FROM orders WHERE id = {id_people}")
+        user = user_dict[chat_id]
+        data = cursor.fetchone()
+        if data is None:
+            order = [message.from_user.id,
+                     message.from_user.first_name,
+                     message.from_user.last_name,
+                     message.from_user.username,
+                     user.location,
+                     user.languages,
+                     user.nums]
+            cursor.execute("INSERT INTO orders VALUES(%s,%s,%s,%s,%s,%s,%s);", order)
+            connection.commit()
+            app_name_first.clear()
+            app_name_last.clear()
+            app_username.clear()
+            app_text.clear()
+            logging.info('Заявка успешно отправлена от - ' + message.chat.username)
+            bot.send_message(chat_id, "Заявка отправлена, мы свяжемся с Вами в ближайшее время")
 
+    except Exception as _ex:
+        print("Error connect >>>", _ex)
+    finally:
+        if connection:
+            print('Добавлена заявка в orders')
+            cursor.close()
+            connection.close()
+            print("Соединение с бд закрыто")
 
 @bot.callback_query_handler(func=lambda call: True)
 def callback_inline(call):
@@ -638,7 +673,6 @@ def callback_inline(call):
             msg = bot.edit_message_text(chat_id=call.message.chat.id, message_id=call.message.message_id,
                                         text='Отмена заполнения заявки...Выберите нужный раздел:')
             bot.clear_step_handler(msg)
-
 
 try:
     bot.infinity_polling(timeout=90, long_polling_timeout=5)
