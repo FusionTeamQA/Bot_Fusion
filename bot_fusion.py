@@ -28,6 +28,7 @@ now = datetime.now()
 dt_string = now.strftime("%d/%m/%Y %H:%M")
 print("date and time =", dt_string)
 
+
 class User:
 
     def __init__(self, name):
@@ -84,7 +85,7 @@ def start(message):
                             )''')
         connection.commit()
         USER_ID = [message.from_user.id, message.from_user.first_name, message.from_user.last_name,
-                       message.from_user.username, dt_string]
+                   message.from_user.username, dt_string]
         cursor.execute("INSERT INTO users_session VALUES(%s,%s,%s,%s,%s);", USER_ID)
         connection.commit()
         markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
@@ -98,6 +99,7 @@ def start(message):
     finally:
         if connection:
             logging.info("Добавлен в базу данных Users")
+
 
 @bot.message_handler(content_types=['text'])
 def get_text_messages(message):
@@ -176,13 +178,15 @@ def get_text_messages(message):
         logging.info('Открыт раздел Вакансии, юзер - ' + message.chat.username)
         markup = types.ReplyKeyboardMarkup(resize_keyboard=True, row_width=1)
         btn1 = types.KeyboardButton('Менеджер по продажам (Sales Manager)')
-        btn2 = types.KeyboardButton('UI/UX дизайнер')
-        btn3 = types.KeyboardButton('Разработчик Fullstack')
         btn5 = types.KeyboardButton('Специалист по тендерам')
+        btn3 = types.KeyboardButton('Рroject Manager')
+        btn2 = types.KeyboardButton('DevOps')
+        btn6 = types.KeyboardButton('Стажер-Лидогенератор')
         btn4 = types.KeyboardButton('🔙 Главное меню')
-        markup.add(btn1, btn2, btn3, btn5, btn4)
+        markup.add(btn1, btn2, btn5, btn3, btn6, btn4)
         bot.send_message(message.from_user.id,
-                         'Раздел: 📢 Вакансии\n \n👍🏻 Хочешь создавать лучшее?\n Тогда нам по пути! \n📲 Перейти к разделу можно по ссылке ' + setting.vacansies,
+                         'Раздел: 📢 Вакансии\n \n👍🏻 Хочешь создавать лучшее?\n Тогда нам по пути! \n📲 Перейти к '
+                         'разделу можно по ссылке ' + setting.vacansies,
                          reply_markup=markup, parse_mode='HTML')
         bot.send_message(message.from_user.id, '⬇ Открытые вакансии', reply_markup=markup)
 
@@ -195,6 +199,25 @@ def get_text_messages(message):
         markup2.add(types.InlineKeyboardButton("Открыть вакансию", setting.SALES_MANAGER))
         bot.send_message(message.from_user.id,
                          'Менеджер по продажам (Sales Manager) -->>> Перейти к вакансии можно по ссылке ' + setting.SALES_MANAGER,
+                         reply_markup=markup2, parse_mode='HTML')
+
+    elif message.text == 'Стажер-Лидогенератор':
+        logging.info('Открыт раздел Стажер-Лидогенератор, юзер - ' + message.chat.username)
+        markup = types.ReplyKeyboardMarkup(resize_keyboard=True, row_width=1)
+        btn1 = types.KeyboardButton('🔙 Главное меню')
+        btn3 = types.KeyboardButton('🕵🏼 Написать Даше (HR компании)')
+        markup.add(btn1, btn3)
+        markup2 = types.InlineKeyboardMarkup()
+        markup2.add(types.InlineKeyboardButton("Выполнить тестовое", setting.GOOGLE_FORM_GENERATOR))
+        bot.send_message(message.from_user.id,
+                         'Теперь у вас появилась еще одна возможность попасть к нам в компанию и войти в IT - '
+                         'через онлайн-стажировку в отделе продаж сроком 2 недели (по 20 часов в неделю)'
+                         'в зависимости от базовых знаний и уровня подготовки.',
+                         reply_markup=markup, parse_mode='HTML')
+        bot.send_message(message.from_user.id,
+                         'Выполни тестовое, получи обратную связь и приглашение на собеседование.'
+                         'Даша с тобой на связи здесь: >>>'
+                         + setting.VK_HR,
                          reply_markup=markup2, parse_mode='HTML')
 
     elif message.text == 'UI/UX дизайнер':
@@ -225,7 +248,7 @@ def get_text_messages(message):
         btn1 = types.KeyboardButton('🔙 Главное меню')
         btn2 = types.KeyboardButton('📝 Оставить заявку')
         btn3 = types.KeyboardButton('🕵🏼 Написать Даше (HR компании)')
-        markup.add(btn1,btn2,btn3)
+        markup.add(btn1, btn2, btn3)
         markup2 = types.InlineKeyboardMarkup()
         markup2.add(types.InlineKeyboardButton("Откликнуться", setting.VK_HR))
         bot.send_message(message.from_user.id,
@@ -235,6 +258,36 @@ def get_text_messages(message):
                          'работа с электронными торговыми площадками, электронными аукционами и сопроводительной '
                          'документацией',
                          reply_markup=markup, parse_mode='HTML')
+        bot.send_message(message.from_user.id,
+                         'Оставьте заявку для дальнейшего собеседования или по всем вопросам и деталям пиши '
+                         'Даше сюда --->>>'
+                         + setting.VK_HR,
+                         reply_markup=markup2, parse_mode='HTML')
+
+    elif message.text == 'DevOps':
+        logging.info('Открыт раздел DevOps, юзер - ' + message.chat.username)
+        markup = types.ReplyKeyboardMarkup(resize_keyboard=True, row_width=1)
+        btn1 = types.KeyboardButton('🔙 Главное меню')
+        btn2 = types.KeyboardButton('📝 Оставить заявку')
+        btn3 = types.KeyboardButton('🕵🏼 Написать Даше (HR компании)')
+        markup.add(btn1, btn2, btn3)
+        markup2 = types.InlineKeyboardMarkup()
+        markup2.add(types.InlineKeyboardButton("Откликнуться", setting.VK_HR))
+        bot.send_message(message.from_user.id,
+                         'Оставьте заявку для дальнейшего собеседования или по всем вопросам и деталям пиши '
+                         'Даше сюда --->>>'
+                         + setting.VK_HR,
+                         reply_markup=markup2, parse_mode='HTML')
+
+    elif message.text == 'Рroject Manager':
+        logging.info('Открыт раздел Рroject Manager, юзер - ' + message.chat.username)
+        markup = types.ReplyKeyboardMarkup(resize_keyboard=True, row_width=1)
+        btn1 = types.KeyboardButton('🔙 Главное меню')
+        btn2 = types.KeyboardButton('📝 Оставить заявку')
+        btn3 = types.KeyboardButton('🕵🏼 Написать Даше (HR компании)')
+        markup.add(btn1, btn2, btn3)
+        markup2 = types.InlineKeyboardMarkup()
+        markup2.add(types.InlineKeyboardButton("Откликнуться", setting.VK_HR))
         bot.send_message(message.from_user.id,
                          'Оставьте заявку для дальнейшего собеседования или по всем вопросам и деталям пиши '
                          'Даше сюда --->>>'
@@ -484,7 +537,7 @@ def process_age_step(message):
             return
         user = user_dict[chat_id]
         user.age = age
-        msg = bot.send_message(chat_id, 'К какой специализации вы относитесь?', reply_markup=board )
+        msg = bot.send_message(chat_id, 'К какой специализации вы относитесь?', reply_markup=board)
         bot.register_next_step_handler(msg, process_spec_step)
     except Exception as e:
         bot.reply_to(message, 'oooops')
@@ -545,7 +598,8 @@ def process_experience_step(message):
         user = user_dict[chat_id]
         user.experience = experience
         msg = bot.send_message(chat_id,
-                               'Вставьте ссылку на ваш профиль(GitHub,Behance,Dribbble,Figma,VK) если нет - напишите нет: ', reply_markup=board)
+                               'Вставьте ссылку на ваш профиль(GitHub,Behance,Dribbble,Figma,VK) если нет - напишите нет: ',
+                               reply_markup=board)
         bot.register_next_step_handler(msg, process_git_acc_step)
     except Exception as e:
         bot.reply_to(message, 'Непредвиденная ошибка')
@@ -672,6 +726,7 @@ def send_z(message):
             connection.close()
             print("Соединение с бд закрыто")
 
+
 @bot.callback_query_handler(func=lambda call: True)
 def callback_inline(call):
     if call.message:
@@ -680,6 +735,7 @@ def callback_inline(call):
             msg = bot.edit_message_text(chat_id=call.message.chat.id, message_id=call.message.message_id,
                                         text='Отмена заполнения заявки...Выберите нужный раздел:')
             bot.clear_step_handler(msg)
+
 
 try:
     bot.infinity_polling(timeout=90, long_polling_timeout=5)

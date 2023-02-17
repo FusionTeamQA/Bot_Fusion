@@ -21,6 +21,7 @@ DESIGN = 'https://career.habr.com/vacancies/1000116917'
 # HR =
 # OFFICE_MANAGER =
 # PROJECT_MANAGER =
+GOOGLE_FORM_GENERATOR = "https://docs.google.com/forms/d/e/1FAIpQLSdjfkcmrragbiBEm_P65c9AHBVC2yi72Mtpcpv_LJNohboZWg/viewform"
 
 # ВК
 
