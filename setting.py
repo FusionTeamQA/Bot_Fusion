@@ -1,5 +1,5 @@
 token = '5975275814:AAHTt5mXosotYJMTsky56c8Bp4L52_uhOgA'
-token_test = '5711969178:AAEXr5Ta-fpZGt7-RNc8NjnnZqkdvrGkWOQ'
+token_test = '5711969178:AAE1u9yT6xLMtYxzphjVTIQeRF_5XSll_5M'
 
 admin_id_ugraswim = 597010493
 admin_hr_id = 563921309
