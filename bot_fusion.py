@@ -2,9 +2,11 @@
 import telebot
 from datetime import datetime
 from telebot import types
+from session_db import connect_db
 import setting
 import psycopg2
 import logging
+import random
 import os, sys
 from config_db import host, user, password, db_name
 from requests.exceptions import ConnectionError, ReadTimeout
@@ -75,7 +77,6 @@ def start(message):
             connection.commit()
         else:
             print(message.from_user.username)
-
         cursor.execute('''CREATE TABLE IF NOT EXISTS users_session(
                             id INTEGER,
                             user_first_name varchar(50),
@@ -118,9 +119,10 @@ def get_text_messages(message):
         btn8 = types.KeyboardButton('🔥 Мы на Хабр')
         btn9 = types.KeyboardButton('🅱️ Мы на Behance')
         btn12 = types.KeyboardButton('📸 Мы в Instagram')
+        btn13 = types.KeyboardButton('🎁 Получить факт о нас')
         btn10 = types.KeyboardButton('✍️️ Мы на LinkedIn')
         btn11 = types.KeyboardButton('🔙 Вернуться к выбору языка')
-        markup.add(btn2, btn5, btn1, btn3, btn4, btn7, btn8, btn9, btn10, btn12)
+        markup.add(btn2, btn5, btn1, btn3, btn4, btn7, btn8, btn9, btn10, btn12, btn13)
         bot.send_message(message.from_user.id, "👋 Вас приветствует бот компании Fusion Tech", reply_markup=markup)
         bot.send_message(message.from_user.id, '👀 Выберите интересующий вас раздел')
 
@@ -135,9 +137,10 @@ def get_text_messages(message):
         btn8 = types.KeyboardButton('🔥 Мы на Хабр')
         btn9 = types.KeyboardButton('🅱️ Мы на Behance')
         btn12 = types.KeyboardButton('📸 Мы в Instagram')
+        btn13 = types.KeyboardButton('🎁 Получить факт о нас')
         btn10 = types.KeyboardButton('✍️️ Мы на LinkedIn')
         btn11 = types.KeyboardButton('🔙 Вернуться к выбору языка')
-        markup.add(btn2, btn5, btn1, btn3, btn4, btn7, btn8, btn9, btn10, btn12)
+        markup.add(btn2, btn5, btn1, btn3, btn4, btn7, btn8, btn9, btn10, btn12, btn13)
         bot.send_message(message.from_user.id, "👋 Вас приветствует бот компании Fusion Tech", reply_markup=markup)
         bot.send_message(message.from_user.id, '👀 Выберите интересующий вас раздел')
 
@@ -154,11 +157,13 @@ def get_text_messages(message):
         btn8 = types.KeyboardButton('🔥 Мы на Хабр')
         btn9 = types.KeyboardButton('🅱️ Мы на Behance')
         btn12 = types.KeyboardButton('📸 Мы в Instagram')
+        btn13 = types.KeyboardButton('🎁 Получить факт о нас')
         btn10 = types.KeyboardButton('✍️️ Мы на LinkedIn')
         btn11 = types.KeyboardButton('🔙 Вернуться к выбору языка')
-        markup.add(btn2, btn5, btn1, btn3, btn4, btn7, btn8, btn9, btn10, btn12)
+        markup.add(btn2, btn5, btn1, btn3, btn4, btn7, btn8, btn9, btn10, btn12, btn13)
         bot.send_message(message.from_user.id, "👋 Вас приветствует бот компании Fusion Tech", reply_markup=markup)
         bot.send_message(message.from_user.id, '👀 Выберите интересующий вас раздел')
+
     elif message.text == '🔙 Вернуться к выбору языка':
         markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
         btn1 = types.KeyboardButton("🇷🇺 Русский")
@@ -327,10 +332,11 @@ def get_text_messages(message):
         btn8 = types.KeyboardButton('🔥 Мы на Хабр')
         btn9 = types.KeyboardButton('🅱️ Мы на Behance')
         btn12 = types.KeyboardButton('📸 Мы в Instagram')
+        btn13 = types.KeyboardButton('🎁 Получить факт о нас')
         btn10 = types.KeyboardButton('✍️️ Мы на LinkedIn')
         btn11 = types.KeyboardButton('🔙 Вернуться к выбору языка')
-        markup.add(btn2, btn5, btn1, btn3, btn4, btn7, btn8, btn9, btn10, btn12)
-        bot.send_message(message.from_user.id, "👀 Выбери интересующий раздел", reply_markup=markup)
+        markup.add(btn2, btn5, btn1, btn3, btn4, btn7, btn8, btn9, btn10, btn12, btn13)
+        bot.send_message(message.from_user.id, '👀 Выберите интересующий вас раздел', reply_markup=markup)
 
     elif message.text == '👥 Мы в ВК':
         logging.info('Открыт раздел ВК, юзер -' + message.chat.username)
@@ -488,6 +494,20 @@ def get_text_messages(message):
                          'Найди работу по душе 🎉 \n В базе Хабр Карьеры всегда актуальные вакансии компании'
                          '\n Перейти к разделу можно по ссылке ' + setting.HABR,
                          reply_markup=markup, parse_mode='HTML')
+
+    elif message.text == '🎁 Получить факт о нас':
+        logging.info('Открыл раздел факты, юзер - ' + message.chat.username)
+        markup = types.ReplyKeyboardMarkup(resize_keyboard=True, row_width=1)
+        btn2 = types.KeyboardButton('🎁 Факт')
+        btn1 = types.KeyboardButton('🔙 Главное меню')
+        markup.add(btn2, btn1)
+        bot.send_message(message.chat.id, 'Только факты. Только Fusion Tech', reply_markup=markup)
+        bot.send_message(message.chat.id, 'Нажми "Факт", чтобы узнать что-то интересное о нас', reply_markup=markup)
+
+    elif message.text == '🎁 Факт':
+        answer = random.choice(facts)
+        bot.send_message(message.chat.id, answer)
+
 
     elif message.text == 'Страница компании':
         markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
