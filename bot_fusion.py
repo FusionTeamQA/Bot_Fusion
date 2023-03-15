@@ -51,7 +51,7 @@ def start(message):
     connection = sqlite3.connect('bd/database_fusion.db')
     cursor = connection.cursor()
     cursor.execute('''CREATE TABLE IF NOT EXISTS users(
-                    user_id INTEGER, 
+                    id INTEGER, 
                     user_first_name TEXT, 
                     user_last_name TEXT, 
                     username TEXT,
@@ -59,7 +59,7 @@ def start(message):
                     )''')
     connection.commit()
     people_id = message.from_user.id
-    cursor.execute(f"SELECT user_id FROM users WHERE user_id = {people_id}")
+    cursor.execute(f"SELECT id FROM users WHERE id = {people_id}")
     data = cursor.fetchone()
     if data is None:
         USER_ID = [message.from_user.id, message.from_user.first_name, message.from_user.last_name,
