@@ -7,3 +7,4 @@ bin
 lib
 backup.py
 bd
+*.db

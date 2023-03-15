@@ -1,8 +1,9 @@
 # -*- coding: utf-8 -*-
 import telebot
+from session_db import create_user_db
+from session_db import create_user_sessions_db
 from datetime import datetime
 from telebot import types
-from session_db import connect_db
 import setting
 import psycopg2
 import logging
@@ -10,6 +11,7 @@ import random
 import os, sys
 from config_db import host, user, password, db_name
 from requests.exceptions import ConnectionError, ReadTimeout
+
 
 logging.basicConfig(format='%(asctime)s - %(levelname)s - %(message)s',
                     level=logging.INFO,
@@ -48,58 +50,12 @@ class User:
 
 @bot.message_handler(commands=['start'])  # стартовая команда
 def start(message):
-    global connection, cursor
-    try:
-        connection = psycopg2.connect(
-            host=host,
-            user=user,
-            password=password,
-            dbname=db_name,
-        )
-        cursor = connection.cursor()
-        cursor.execute("SELECT version();")
-        print(f"Server version: + {cursor.fetchone()}")
-        cursor.execute('''CREATE TABLE IF NOT EXISTS users(
-                            id INTEGER,
-                            user_first_name varchar(50),
-                            user_last_name varchar(50),
-                            username varchar(50),
-                            data_time varchar(50)
-                            )''')
-        connection.commit()
-        people_id = message.from_user.id
-        cursor.execute(f"SELECT id FROM users WHERE id = {people_id}")
-        data = cursor.fetchone()
-        if data is None:
-            USER_ID = [message.from_user.id, message.from_user.first_name, message.from_user.last_name,
-                       message.from_user.username, dt_string]
-            cursor.execute("INSERT INTO users VALUES(%s,%s,%s,%s,%s);", USER_ID)
-            connection.commit()
-        else:
-            print(message.from_user.username)
-        cursor.execute('''CREATE TABLE IF NOT EXISTS users_session(
-                            id INTEGER,
-                            user_first_name varchar(50),
-                            user_last_name varchar(50),
-                            username varchar(50),
-                            data_time varchar(50)
-                            )''')
-        connection.commit()
-        USER_ID = [message.from_user.id, message.from_user.first_name, message.from_user.last_name,
-                   message.from_user.username, dt_string]
-        cursor.execute("INSERT INTO users_session VALUES(%s,%s,%s,%s,%s);", USER_ID)
-        connection.commit()
-        markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
-        btn1 = types.KeyboardButton("🇷🇺 Русский")
-        btn2 = types.KeyboardButton('🇬🇧 English')
-        markup.add(btn1)
-        bot.send_message(message.from_user.id, "🇷🇺 Выберите язык / 🇬🇧 Choose your language", reply_markup=markup)
-    except Exception as _ex:
-        print("Error connect >>>", _ex)
-
-    finally:
-        if connection:
-            logging.info("Добавлен в базу данных Users")
+    session_db.create_user_db()
+    markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
+    btn1 = types.KeyboardButton("🇷🇺 Русский")
+    btn2 = types.KeyboardButton('🇬🇧 English')
+    markup.add(btn1)
+    bot.send_message(message.from_user.id, "🇷🇺 Выберите язык / 🇬🇧 Choose your language", reply_markup=markup)
 
 
 @bot.message_handler(content_types=['text'])
@@ -172,6 +128,7 @@ def get_text_messages(message):
         bot.send_message(message.from_user.id, "🇷🇺 Выберите язык / 🇬🇧 Choose your language", reply_markup=markup)
 
     elif message.text == '🌐 Сайт':
+        session_db.create_user_sessions_db()
         logging.info('Открыт раздел сайт, юзер - ' + message.chat.username)
         markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
         markup2 = types.InlineKeyboardMarkup()
@@ -180,6 +137,7 @@ def get_text_messages(message):
                          'Наша гордость - наша история.👍 Перейти к сайту можно по ссылке ' + setting.website,
                          reply_markup=markup2, parse_mode='HTML')
     elif message.text == '📢 Вакансии':
+        session_db.create_user_sessions_db()
         logging.info('Открыт раздел Вакансии, юзер - ' + message.chat.username)
         markup = types.ReplyKeyboardMarkup(resize_keyboard=True, row_width=1)
         btn1 = types.KeyboardButton('Менеджер по продажам (Sales Manager)')
@@ -501,7 +459,7 @@ def get_text_messages(message):
         btn2 = types.KeyboardButton('🎁 Факт')
         btn1 = types.KeyboardButton('🔙 Главное меню')
         markup.add(btn2, btn1)
-        bot.send_message(message.chat.id, 'Факты, которыми мы гордимся', reply_markup=markup)
+        bot.send_message(message.chat.id, 'Только факты. Только Fusion Tech', reply_markup=markup)
         bot.send_message(message.chat.id, 'Нажми "Факт", чтобы узнать что-то интересное о нас', reply_markup=markup)
 
     elif message.text == '🎁 Факт':
@@ -714,7 +672,7 @@ def send_z(message):
                 nums text,
                 data_time varchar(50)
                 );''')
-        connection.commit()
+        # connection.commit()
         id_people = message.from_user.id
         cursor.execute(f"SELECT id FROM orders WHERE id = {id_people}")
         user = user_dict[chat_id]
@@ -729,7 +687,7 @@ def send_z(message):
                      user.nums,
                      dt_string]
             cursor.execute("INSERT INTO orders VALUES(%s,%s,%s,%s,%s,%s,%s,%s);", order)
-            connection.commit()
+            # connection.commit()
             app_name_first.clear()
             app_name_last.clear()
             app_username.clear()
