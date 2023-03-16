@@ -5,6 +5,7 @@ charset-normalizer==2.0.12
 idna==3.4
 lxml==4.6.3
 plyer==2.0.0
+psycopg2==2.9.5
 pyTelegramBotAPI==3.8.2
 requests==2.26.0
 soupsieve==2.3.2.post1

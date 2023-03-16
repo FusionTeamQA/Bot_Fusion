@@ -8,3 +8,5 @@ lib
 backup.py
 bd
 *.db
+bot_fusion_test.py
+ssh/db/

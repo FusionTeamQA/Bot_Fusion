@@ -1,4 +1,6 @@
 # -*- coding: utf-8 -*-
+import time
+
 import telebot
 from datetime import datetime
 from telebot import types
@@ -97,6 +99,7 @@ def get_text_messages(message):
         markup = types.ReplyKeyboardMarkup(resize_keyboard=True, row_width=2)
         btn2 = types.KeyboardButton('📢 Вакансии')
         btn5 = types.KeyboardButton('📝 Оставить заявку')
+        btn11 = types.KeyboardButton('⚖️ Стажировка')
         btn1 = types.KeyboardButton("🌐 Сайт")
         btn3 = types.KeyboardButton('📁 Проекты')
         btn4 = types.KeyboardButton('📚 Блог')
@@ -106,8 +109,7 @@ def get_text_messages(message):
         btn12 = types.KeyboardButton('📸 Мы в Instagram')
         btn13 = types.KeyboardButton('🎁 Получить факт о нас')
         btn10 = types.KeyboardButton('✍️️ Мы на LinkedIn')
-        btn11 = types.KeyboardButton('🔙 Вернуться к выбору языка')
-        markup.add(btn2, btn5, btn1, btn3, btn4, btn7, btn8, btn9, btn10, btn12, btn13)
+        markup.add(btn2, btn5, btn11, btn1, btn3, btn4, btn7, btn8, btn9, btn10, btn12, btn13)
         bot.send_message(message.from_user.id, "👋 Вас приветствует бот компании Fusion Tech", reply_markup=markup)
         bot.send_message(message.from_user.id, '👀 Выберите интересующий вас раздел')
 
@@ -115,6 +117,7 @@ def get_text_messages(message):
         markup = types.ReplyKeyboardMarkup(resize_keyboard=True, row_width=2)
         btn2 = types.KeyboardButton('📢 Вакансии')
         btn5 = types.KeyboardButton('📝 Оставить заявку')
+        btn11 = types.KeyboardButton('⚖️ Стажировка')
         btn1 = types.KeyboardButton("🌐 Сайт")
         btn3 = types.KeyboardButton('📁 Проекты')
         btn4 = types.KeyboardButton('📚 Блог')
@@ -124,8 +127,7 @@ def get_text_messages(message):
         btn12 = types.KeyboardButton('📸 Мы в Instagram')
         btn13 = types.KeyboardButton('🎁 Получить факт о нас')
         btn10 = types.KeyboardButton('✍️️ Мы на LinkedIn')
-        btn11 = types.KeyboardButton('🔙 Вернуться к выбору языка')
-        markup.add(btn2, btn5, btn1, btn3, btn4, btn7, btn8, btn9, btn10, btn12, btn13)
+        markup.add(btn2, btn5, btn11, btn1, btn3, btn4, btn7, btn8, btn9, btn10, btn12, btn13)
         bot.send_message(message.from_user.id, "👋 Вас приветствует бот компании Fusion Tech", reply_markup=markup)
         bot.send_message(message.from_user.id, '👀 Выберите интересующий вас раздел')
 
@@ -135,6 +137,7 @@ def get_text_messages(message):
         markup = types.ReplyKeyboardMarkup(resize_keyboard=True, row_width=2)
         btn2 = types.KeyboardButton('📢 Вакансии')
         btn5 = types.KeyboardButton('📝 Оставить заявку')
+        btn11 = types.KeyboardButton('⚖️ Стажировка')
         btn1 = types.KeyboardButton("🌐 Сайт")
         btn3 = types.KeyboardButton('📁 Проекты')
         btn4 = types.KeyboardButton('📚 Блог')
@@ -144,8 +147,7 @@ def get_text_messages(message):
         btn12 = types.KeyboardButton('📸 Мы в Instagram')
         btn13 = types.KeyboardButton('🎁 Получить факт о нас')
         btn10 = types.KeyboardButton('✍️️ Мы на LinkedIn')
-        btn11 = types.KeyboardButton('🔙 Вернуться к выбору языка')
-        markup.add(btn2, btn5, btn1, btn3, btn4, btn7, btn8, btn9, btn10, btn12, btn13)
+        markup.add(btn2, btn5, btn11, btn1, btn3, btn4, btn7, btn8, btn9, btn10, btn12, btn13)
         bot.send_message(message.from_user.id, "👋 Вас приветствует бот компании Fusion Tech", reply_markup=markup)
         bot.send_message(message.from_user.id, '👀 Выберите интересующий вас раздел')
 
@@ -284,6 +286,36 @@ def get_text_messages(message):
                          + setting.VK_HR,
                          reply_markup=markup2, parse_mode='HTML')
 
+    elif message.text == '⚖️ Стажировка':
+        logging.info('Открыт раздел Стажировка, юзер -' + message.chat.username)
+        markup = types.ReplyKeyboardMarkup(resize_keyboard=True, row_width=1)
+        btn1 = types.KeyboardButton('🕵🏼 Написать Даше (HR компании)')
+        btn2 = types.KeyboardButton('📝 Оставить заявку')
+        btn3 = types.KeyboardButton('🔙 Главное меню')
+        markup.add(btn1, btn2, btn3)
+        bot.send_message(message.from_user.id, 'На данный момент мы обучаем кандидатов, имеющих базовые знания HTML, CSS, JS '
+                                               'и уровень владения английским не ниже чтения технической документации. '
+                                               'Преимуществом будут базовые знания React.js.', reply_markup=markup)
+        time.sleep(1)
+        bot.send_message(message.from_user.id, 'Почему мы предъявляем такие требования? На каждый этап стажировки отводится определенное время, за рамки которого желательно не выходить.'
+                                               'Сроки достаточно сжатые, уложиться в них без базы будет сложно.', reply_markup=markup)
+        time.sleep(1)
+        bot.send_message(message.from_user.id, 'Обучение длится около 3-х месяцев (порой меньше, в зависимости от скорости усвоения материала). '
+                                               'За вами закрепляется ментор, который дает теоретические и практические задания, а также постоянную обратную связь. '
+                                               'Проходит обучение непосредственно на территории Fusion Lab, каждый будний день (8 часов в день/40 часов в неделю).', reply_markup=markup)
+        time.sleep(1)
+        bot.send_message(message.from_user.id, 'Конечный результат стажировки - фуллстек-разработчик (фронтенд на React.js , бэкенд на Node.js)', reply_markup=markup)
+        time.sleep(1)
+        bot.send_message(message.from_user.id, 'Форматы обучения: в офисе, удаленный и гибридный (в офисе и некоторые дни удаленно)', reply_markup=markup)
+        time.sleep(1)
+        bot.send_message(message.from_user.id, 'При успешном завершении стажировки компания предлагает официальное трудоустройство по ТК РФ.', reply_markup=markup)
+        time.sleep(1)
+        bot.send_message(message.from_user.id, 'Обучение бесплатное, стипендии не выплачиваются.', reply_markup=markup)
+        time.sleep(3)
+        bot.send_message(message.from_user.id, 'Оставьте заявку для дальнейшего собеседования или по всем вопросам и деталям пиши '
+                         'Даше сюда --->>>' + setting.VK_HR)
+
+
     elif message.text == '📁 Проекты':
         logging.info('Открыт раздел Проекты, юзер - ' + message.chat.username)
         markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
@@ -310,6 +342,7 @@ def get_text_messages(message):
         markup = types.ReplyKeyboardMarkup(resize_keyboard=True, row_width=2)
         btn2 = types.KeyboardButton('📢 Вакансии')
         btn5 = types.KeyboardButton('📝 Оставить заявку')
+        btn11 = types.KeyboardButton('⚖️ Стажировка')
         btn1 = types.KeyboardButton("🌐 Сайт")
         btn3 = types.KeyboardButton('📁 Проекты')
         btn4 = types.KeyboardButton('📚 Блог')
@@ -319,8 +352,7 @@ def get_text_messages(message):
         btn12 = types.KeyboardButton('📸 Мы в Instagram')
         btn13 = types.KeyboardButton('🎁 Получить факт о нас')
         btn10 = types.KeyboardButton('✍️️ Мы на LinkedIn')
-        btn11 = types.KeyboardButton('🔙 Вернуться к выбору языка')
-        markup.add(btn2, btn5, btn1, btn3, btn4, btn7, btn8, btn9, btn10, btn12, btn13)
+        markup.add(btn2, btn5, btn11, btn1, btn3, btn4, btn7, btn8, btn9, btn10, btn12, btn13)
         bot.send_message(message.from_user.id, '👀 Выберите интересующий вас раздел', reply_markup=markup)
 
     elif message.text == '👥 Мы в ВК':
