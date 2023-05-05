@@ -176,10 +176,10 @@ def get_text_messages(message):
         # btn3 = types.KeyboardButton('Рroject Manager')
         # btn2 = types.KeyboardButton('DevOps')
         # btn6 = types.KeyboardButton('Стажер-Лидогенератор')
-        btn7 = types.KeyboardButton('Контент-менеджер')
+        # btn7 = types.KeyboardButton('Контент-менеджер')
         btn8 = types.KeyboardButton('Графический дизайнер')
         btn4 = types.KeyboardButton('🔙 Главное меню')
-        markup.add(btn7, btn8, btn4)
+        markup.add(btn8, btn4)
         # bot.send_message(message.from_user.id,
         #                  'Раздел: 📢 Вакансии\n \n👍🏻 Хочешь создавать лучшее? Тогда нам по пути! \n📲 Перейти к '
         #                  'разделу можно по ссылке ' + setting.vacansies,
