@@ -169,18 +169,25 @@ def get_text_messages(message):
     elif message.text == '📢 Вакансии':
         logging.info('Открыт раздел Вакансии, юзер - ' + message.chat.username)
         markup = types.ReplyKeyboardMarkup(resize_keyboard=True, row_width=1)
-        btn1 = types.KeyboardButton('Менеджер по продажам (Sales Manager)')
-        btn5 = types.KeyboardButton('Специалист по тендерам')
-        btn3 = types.KeyboardButton('Рroject Manager')
-        btn2 = types.KeyboardButton('DevOps')
-        btn6 = types.KeyboardButton('Стажер-Лидогенератор')
+        markup2 = types.InlineKeyboardMarkup()
+        markup2.add(types.InlineKeyboardButton("Посмотреть вакансии на сайте", setting.vacansies))
+        # btn1 = types.KeyboardButton('Менеджер по продажам (Sales Manager)')
+        # btn5 = types.KeyboardButton('Специалист по тендерам')
+        # btn3 = types.KeyboardButton('Рroject Manager')
+        # btn2 = types.KeyboardButton('DevOps')
+        # btn6 = types.KeyboardButton('Стажер-Лидогенератор')
+        btn7 = types.KeyboardButton('Контент-менеджер')
+        btn8 = types.KeyboardButton('Графический дизайнер')
         btn4 = types.KeyboardButton('🔙 Главное меню')
-        markup.add(btn1, btn2, btn5, btn3, btn6, btn4)
+        markup.add(btn7, btn8, btn4)
+        # bot.send_message(message.from_user.id,
+        #                  'Раздел: 📢 Вакансии\n \n👍🏻 Хочешь создавать лучшее? Тогда нам по пути! \n📲 Перейти к '
+        #                  'разделу можно по ссылке ' + setting.vacansies,
+        #                  reply_markup=markup2, parse_mode='HTML')
         bot.send_message(message.from_user.id,
-                         'Раздел: 📢 Вакансии\n \n👍🏻 Хочешь создавать лучшее?\n Тогда нам по пути! \n📲 Перейти к '
-                         'разделу можно по ссылке ' + setting.vacansies,
-                         reply_markup=markup, parse_mode='HTML')
-        bot.send_message(message.from_user.id, '⬇ Открытые вакансии', reply_markup=markup)
+                         'Раздел: 📢 Вакансии\n \n👍🏻 Хочешь создавать лучшее? Тогда нам по пути! \n',
+                         reply_markup=markup2, parse_mode='HTML')
+        bot.send_message(message.from_user.id, '⬇ Или перейди на нужную вакансию по кнопкам ниже', reply_markup=markup)
 
     elif message.text == 'Менеджер по продажам (Sales Manager)':
         logging.info('Открыт раздел Менеджер по продажам, юзер - ' + message.chat.username)
@@ -255,6 +262,36 @@ def get_text_messages(message):
                          'Даше сюда --->>>'
                          + setting.VK_HR,
                          reply_markup=markup2, parse_mode='HTML')
+
+    elif message.text == 'Контент-менеджер':
+        logging.info('Открыт раздел Контент-менеджер, юзер - ' + message.chat.username)
+        markup = types.ReplyKeyboardMarkup(resize_keyboard=True, row_width=1)
+        btn1 = types.KeyboardButton('🔙 Главное меню')
+        btn2 = types.KeyboardButton('📝 Оставить заявку')
+        btn3 = types.KeyboardButton('🕵🏼 Написать Даше (HR компании)')
+        markup.add(btn1, btn2, btn3)
+        markup2 = types.InlineKeyboardMarkup()
+        markup2.add(types.InlineKeyboardButton("Откликнуться", setting.VK_HR))
+        bot.send_message(message.from_user.id,
+                         'Оставьте заявку для дальнейшего собеседования или по всем вопросам и деталям пиши '
+                         'Даше сюда --->>>'
+                         + setting.VK_HR,
+                         reply_markup=markup, parse_mode='HTML')
+
+    elif message.text == 'Графический дизайнер':
+        logging.info('Открыт раздел Графический дизайнер, юзер - ' + message.chat.username)
+        markup = types.ReplyKeyboardMarkup(resize_keyboard=True, row_width=1)
+        btn1 = types.KeyboardButton('🔙 Главное меню')
+        btn2 = types.KeyboardButton('📝 Оставить заявку')
+        btn3 = types.KeyboardButton('🕵🏼 Написать Даше (HR компании)')
+        markup.add(btn1, btn2, btn3)
+        markup2 = types.InlineKeyboardMarkup()
+        markup2.add(types.InlineKeyboardButton("Откликнуться", setting.VK_HR))
+        bot.send_message(message.from_user.id,
+                         'Оставьте заявку для дальнейшего собеседования или по всем вопросам и деталям пиши '
+                         'Даше сюда --->>>'
+                         + setting.VK_HR,
+                         reply_markup=markup, parse_mode='HTML')
 
     elif message.text == 'DevOps':
         logging.info('Открыт раздел DevOps, юзер - ' + message.chat.username)
