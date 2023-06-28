@@ -110,7 +110,7 @@ def get_text_messages(message):
         btn12 = types.KeyboardButton('📸 Мы в Instagram')
         btn13 = types.KeyboardButton('🎁 Получить факт о нас')
         btn10 = types.KeyboardButton('✍️️ Мы на LinkedIn')
-        markup.add(btn2, btn5, btn11, btn1, btn3, btn4, btn7, btn8, btn9, btn10, btn12, btn13, btn14)
+        markup.add(btn2, btn5, btn11, btn1, btn3, btn4, btn7, btn8, btn9, btn10, btn12, btn14, btn13 )
         bot.send_message(message.from_user.id, "👋 Вас приветствует бот компании Fusion Tech", reply_markup=markup)
         bot.send_message(message.from_user.id, '👀 Выберите интересующий вас раздел')
 
@@ -129,7 +129,7 @@ def get_text_messages(message):
         btn12 = types.KeyboardButton('📸 Мы в Instagram')
         btn13 = types.KeyboardButton('🎁 Получить факт о нас')
         btn10 = types.KeyboardButton('✍️️ Мы на LinkedIn')
-        markup.add(btn2, btn5, btn11, btn1, btn3, btn4, btn7, btn8, btn9, btn10, btn12, btn13, btn14)
+        markup.add(btn2, btn5, btn11, btn1, btn3, btn4, btn7, btn8, btn9, btn10, btn12, btn14, btn13 )
         bot.send_message(message.from_user.id, "👋 Вас приветствует бот компании Fusion Tech", reply_markup=markup)
         bot.send_message(message.from_user.id, '👀 Выберите интересующий вас раздел')
 
@@ -144,12 +144,13 @@ def get_text_messages(message):
         btn3 = types.KeyboardButton('📁 Проекты')
         btn4 = types.KeyboardButton('📚 Блог')
         btn7 = types.KeyboardButton('👥 Мы в ВК')
+        btn14 = types.KeyboardButton('💬 Мы на VC.RU')
         btn8 = types.KeyboardButton('🔥 Мы на Хабр')
         btn9 = types.KeyboardButton('🅱️ Мы на Behance')
         btn12 = types.KeyboardButton('📸 Мы в Instagram')
         btn13 = types.KeyboardButton('🎁 Получить факт о нас')
         btn10 = types.KeyboardButton('✍️️ Мы на LinkedIn')
-        markup.add(btn2, btn5, btn11, btn1, btn3, btn4, btn7, btn8, btn9, btn10, btn12, btn13)
+        markup.add(btn2, btn5, btn11, btn1, btn3, btn4, btn7, btn8, btn9, btn10, btn12, btn14, btn13 )
         bot.send_message(message.from_user.id, "👋 Вас приветствует бот компании Fusion Tech", reply_markup=markup)
         bot.send_message(message.from_user.id, '👀 Выберите интересующий вас раздел')
 
@@ -392,7 +393,7 @@ def get_text_messages(message):
         btn12 = types.KeyboardButton('📸 Мы в Instagram')
         btn13 = types.KeyboardButton('🎁 Получить факт о нас')
         btn10 = types.KeyboardButton('✍️️ Мы на LinkedIn')
-        markup.add(btn2, btn5, btn11, btn1, btn3, btn4, btn7, btn8, btn9, btn10, btn12, btn13, btn14)
+        markup.add(btn2, btn5, btn11, btn1, btn3, btn4, btn7, btn8, btn9, btn10, btn12, btn14, btn13 )
         bot.send_message(message.from_user.id, '👀 Выберите интересующий вас раздел', reply_markup=markup)
 
     elif message.text == '👥 Мы в ВК':
