@@ -104,12 +104,13 @@ def get_text_messages(message):
         btn3 = types.KeyboardButton('📁 Проекты')
         btn4 = types.KeyboardButton('📚 Блог')
         btn7 = types.KeyboardButton('👥 Мы в ВК')
+        btn14 = types.KeyboardButton('😏 Мы на VC.RU')
         btn8 = types.KeyboardButton('🔥 Мы на Хабр')
         btn9 = types.KeyboardButton('🅱️ Мы на Behance')
         btn12 = types.KeyboardButton('📸 Мы в Instagram')
         btn13 = types.KeyboardButton('🎁 Получить факт о нас')
         btn10 = types.KeyboardButton('✍️️ Мы на LinkedIn')
-        markup.add(btn2, btn5, btn11, btn1, btn3, btn4, btn7, btn8, btn9, btn10, btn12, btn13)
+        markup.add(btn2, btn5, btn11, btn1, btn3, btn4, btn7, btn8, btn9, btn10, btn12, btn13, btn14)
         bot.send_message(message.from_user.id, "👋 Вас приветствует бот компании Fusion Tech", reply_markup=markup)
         bot.send_message(message.from_user.id, '👀 Выберите интересующий вас раздел')
 
@@ -121,13 +122,14 @@ def get_text_messages(message):
         btn1 = types.KeyboardButton("🌐 Сайт")
         btn3 = types.KeyboardButton('📁 Проекты')
         btn4 = types.KeyboardButton('📚 Блог')
+        btn14 = types.KeyboardButton('😏 Мы на VC.RU')
         btn7 = types.KeyboardButton('👥 Мы в ВК')
         btn8 = types.KeyboardButton('🔥 Мы на Хабр')
         btn9 = types.KeyboardButton('🅱️ Мы на Behance')
         btn12 = types.KeyboardButton('📸 Мы в Instagram')
         btn13 = types.KeyboardButton('🎁 Получить факт о нас')
         btn10 = types.KeyboardButton('✍️️ Мы на LinkedIn')
-        markup.add(btn2, btn5, btn11, btn1, btn3, btn4, btn7, btn8, btn9, btn10, btn12, btn13)
+        markup.add(btn2, btn5, btn11, btn1, btn3, btn4, btn7, btn8, btn9, btn10, btn12, btn13, btn14)
         bot.send_message(message.from_user.id, "👋 Вас приветствует бот компании Fusion Tech", reply_markup=markup)
         bot.send_message(message.from_user.id, '👀 Выберите интересующий вас раздел')
 
@@ -536,6 +538,17 @@ def get_text_messages(message):
                          '\n📍Taganrog // Yerevan // Claymont'
                          '\n Перейти к разделу можно по ссылке ' + setting.INSTAGRAM,
                          reply_markup=markup2, parse_mode='HTML')
+
+    elif message.text == '😏 Мы на VC.RU':
+        logging.info('Открыт раздел Хабр, юзер - ' + message.chat.username)
+        markup = types.ReplyKeyboardMarkup(resize_keyboard=True, row_width=1)
+        btn1 = types.KeyboardButton('🔙 Главное меню')
+        markup.add(btn1)
+        bot.send_message(message.from_user.id,
+                         'Об опыте развития IT-компании, бизнес-процессах, кейсах и решениях. \n Веб/мобильная разработка, UI/UX, '
+                         'QA, проектный менеджмент, аудит проектов.'
+                         '\n Перейти к разделу можно по ссылке ' + setting.VC_RU,
+                         reply_markup=markup, parse_mode='HTML')
 
     elif message.text == '🔥 Мы на Хабр':
         logging.info('Открыт раздел Хабр, юзер - ' + message.chat.username)

@@ -32,3 +32,4 @@ BEHANCE = 'https://www.behance.net/fusion-tech'
 HABR = 'https://career.habr.com/companies/fusion-tech'
 LINKEDIN = 'http://linkedin.com/company/fusion-web-dev'
 INSTAGRAM = "https://www.instagram.com/fusion.tech.global/"
+VC_RU = "https://vc.ru/s/1272116-fusion-tech"
