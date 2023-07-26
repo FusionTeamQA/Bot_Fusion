@@ -174,15 +174,15 @@ def get_text_messages(message):
         markup = types.ReplyKeyboardMarkup(resize_keyboard=True, row_width=1)
         markup2 = types.InlineKeyboardMarkup()
         markup2.add(types.InlineKeyboardButton("Посмотреть вакансии на сайте", setting.vacansies))
-        # btn1 = types.KeyboardButton('Менеджер по продажам (Sales Manager)')
+        btn1 = types.KeyboardButton('Менеджер по продажам (Sales Manager)')
         # btn5 = types.KeyboardButton('Специалист по тендерам')
         # btn3 = types.KeyboardButton('Рroject Manager')
         # btn2 = types.KeyboardButton('DevOps')
         # btn6 = types.KeyboardButton('Стажер-Лидогенератор')
         # btn7 = types.KeyboardButton('Контент-менеджер')
-        btn8 = types.KeyboardButton('Графический дизайнер')
+        # btn8 = types.KeyboardButton('Графический дизайнер')
         btn4 = types.KeyboardButton('🔙 Главное меню')
-        markup.add(btn8, btn4)
+        markup.add(btn1, btn4)
         # bot.send_message(message.from_user.id,
         #                  'Раздел: 📢 Вакансии\n \n👍🏻 Хочешь создавать лучшее? Тогда нам по пути! \n📲 Перейти к '
         #                  'разделу можно по ссылке ' + setting.vacansies,
@@ -198,9 +198,9 @@ def get_text_messages(message):
         btn1 = types.KeyboardButton('🔙 Главное меню')
         markup.add(btn1)
         markup2 = types.InlineKeyboardMarkup()
-        markup2.add(types.InlineKeyboardButton("Открыть вакансию", setting.SALES_MANAGER))
+        markup2.add(types.InlineKeyboardButton("Открыть вакансию", setting.SALES_MANAGER_VK))
         bot.send_message(message.from_user.id,
-                         'Менеджер по продажам (Sales Manager) -->>> Перейти к вакансии можно по ссылке ' + setting.SALES_MANAGER,
+                         'Менеджер по продажам (Sales Manager) -->>> Перейти к вакансии можно по ссылке ' + setting.SALES_MANAGER_VK,
                          reply_markup=markup2, parse_mode='HTML')
 
     elif message.text == 'Стажер-Лидогенератор':

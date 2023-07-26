@@ -13,6 +13,7 @@ projects = 'https://fusion-tech.ru/projects'
 # Ссылки по специализациям
 
 SALES_MANAGER = 'https://career.habr.com/vacancies/1000116918'
+SALES_MANAGER_VK = 'https://vk.com/fusion_tech?w=wall-158106363_1199'
 # QA =
 DEV_FULL = 'https://career.habr.com/vacancies/1000116914'
 # DEV_FRONT =
