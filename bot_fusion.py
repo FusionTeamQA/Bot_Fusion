@@ -23,7 +23,7 @@ f = open('data/facts.txt', 'r', encoding='UTF-8')
 facts = f.read().split('\n')
 f.close()
 
-bot = telebot.TeleBot(setting.token_test)
+bot = telebot.TeleBot(setting.token)
 
 user_dict = {}
 user_chats = 0
@@ -175,6 +175,8 @@ def get_text_messages(message):
         markup2 = types.InlineKeyboardMarkup()
         markup2.add(types.InlineKeyboardButton("Посмотреть вакансии на сайте", setting.vacansies))
         btn1 = types.KeyboardButton('Менеджер по продажам (Sales Manager)')
+        btn9 = types.KeyboardButton('Офис-менеджер')
+        btn10 = types.KeyboardButton('Маркетолог')
         # btn5 = types.KeyboardButton('Специалист по тендерам')
         # btn3 = types.KeyboardButton('Рroject Manager')
         # btn2 = types.KeyboardButton('DevOps')
@@ -182,7 +184,7 @@ def get_text_messages(message):
         # btn7 = types.KeyboardButton('Контент-менеджер')
         # btn8 = types.KeyboardButton('Графический дизайнер')
         btn4 = types.KeyboardButton('🔙 Главное меню')
-        markup.add(btn1, btn4)
+        markup.add(btn1, btn9, btn10, btn4)
         # bot.send_message(message.from_user.id,
         #                  'Раздел: 📢 Вакансии\n \n👍🏻 Хочешь создавать лучшее? Тогда нам по пути! \n📲 Перейти к '
         #                  'разделу можно по ссылке ' + setting.vacansies,
@@ -224,7 +226,7 @@ def get_text_messages(message):
                          reply_markup=markup2, parse_mode='HTML')
 
     elif message.text == 'Офис-менеджер':
-        logging.info('Открыт раздел Стажер-Лидогенератор, юзер - ' + message.chat.username)
+        logging.info('Открыт раздел Офис-менеджер, юзер - ' + message.chat.username)
         markup = types.ReplyKeyboardMarkup(resize_keyboard=True, row_width=1)
         btn1 = types.KeyboardButton('🔙 Главное меню')
         btn3 = types.KeyboardButton('🕵🏼 Написать Даше (HR компании)')
@@ -232,9 +234,25 @@ def get_text_messages(message):
         markup2 = types.InlineKeyboardMarkup()
         markup2.add(types.InlineKeyboardButton("Откликнуться", setting.VK_HR))
         bot.send_message(message.from_user.id,
-                         'ам нужен тот, кто будет беречь наш уют и отвечать за хозяйственно-организационную часть жизни. '
+                         'Нам нужен тот, кто будет беречь наш уют и отвечать за хозяйственно-организационную часть жизни. '
                          'И ты обязательно должен быть сведущ в ведении первичной документации'
                          'и отличать акт сверки от счета-фактуры', reply_markup=markup, parse_mode='HTML')
+        bot.send_message(message.from_user.id,
+                         'Подробное описание обязанностей / вилки и прочего - у Даши >>>'
+                         + setting.VK_HR,
+                         reply_markup=markup2, parse_mode='HTML')
+
+    elif message.text == 'Маркетолог':
+        logging.info('Открыт раздел Маркетолог, юзер - ' + message.chat.username)
+        markup = types.ReplyKeyboardMarkup(resize_keyboard=True, row_width=1)
+        btn1 = types.KeyboardButton('🔙 Главное меню')
+        btn3 = types.KeyboardButton('🕵🏼 Написать Даше (HR компании)')
+        markup.add(btn1, btn3)
+        markup2 = types.InlineKeyboardMarkup()
+        markup2.add(types.InlineKeyboardButton("Откликнуться", setting.VK_HR))
+        bot.send_message(message.from_user.id,
+                         'Нам нужен тот, кто будет развиваться с нами в новых направлениях '
+                         'и погружаться в их глубокую аналитику',reply_markup=markup, parse_mode='HTML')
         bot.send_message(message.from_user.id,
                          'Подробное описание обязанностей / вилки и прочего - у Даши >>>'
                          + setting.VK_HR,
