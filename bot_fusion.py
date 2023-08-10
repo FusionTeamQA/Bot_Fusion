@@ -23,7 +23,7 @@ f = open('data/facts.txt', 'r', encoding='UTF-8')
 facts = f.read().split('\n')
 f.close()
 
-bot = telebot.TeleBot(setting.token)
+bot = telebot.TeleBot(setting.token_test)
 
 user_dict = {}
 user_chats = 0
@@ -203,6 +203,7 @@ def get_text_messages(message):
                          'Менеджер по продажам (Sales Manager) -->>> Перейти к вакансии можно по ссылке ' + setting.SALES_MANAGER_VK,
                          reply_markup=markup2, parse_mode='HTML')
 
+
     elif message.text == 'Стажер-Лидогенератор':
         logging.info('Открыт раздел Стажер-Лидогенератор, юзер - ' + message.chat.username)
         markup = types.ReplyKeyboardMarkup(resize_keyboard=True, row_width=1)
@@ -219,6 +220,23 @@ def get_text_messages(message):
         bot.send_message(message.from_user.id,
                          'Выполни тестовое, получи обратную связь и приглашение на собеседование.'
                          'Даша с тобой на связи здесь: >>>'
+                         + setting.VK_HR,
+                         reply_markup=markup2, parse_mode='HTML')
+
+    elif message.text == 'Офис-менеджер':
+        logging.info('Открыт раздел Стажер-Лидогенератор, юзер - ' + message.chat.username)
+        markup = types.ReplyKeyboardMarkup(resize_keyboard=True, row_width=1)
+        btn1 = types.KeyboardButton('🔙 Главное меню')
+        btn3 = types.KeyboardButton('🕵🏼 Написать Даше (HR компании)')
+        markup.add(btn1, btn3)
+        markup2 = types.InlineKeyboardMarkup()
+        markup2.add(types.InlineKeyboardButton("Откликнуться", setting.VK_HR))
+        bot.send_message(message.from_user.id,
+                         'ам нужен тот, кто будет беречь наш уют и отвечать за хозяйственно-организационную часть жизни. '
+                         'И ты обязательно должен быть сведущ в ведении первичной документации'
+                         'и отличать акт сверки от счета-фактуры', reply_markup=markup, parse_mode='HTML')
+        bot.send_message(message.from_user.id,
+                         'Подробное описание обязанностей / вилки и прочего - у Даши >>>'
                          + setting.VK_HR,
                          reply_markup=markup2, parse_mode='HTML')
 
