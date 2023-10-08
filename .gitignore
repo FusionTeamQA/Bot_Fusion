@@ -10,3 +10,4 @@ bd
 *.db
 bot_fusion_test.py
 ssh/db/
+__pycache__
