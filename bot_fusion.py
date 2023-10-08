@@ -174,193 +174,241 @@ def get_text_messages(message):
         markup = types.ReplyKeyboardMarkup(resize_keyboard=True, row_width=1)
         markup2 = types.InlineKeyboardMarkup()
         markup2.add(types.InlineKeyboardButton("Посмотреть вакансии на сайте", setting.vacansies))
-        btn1 = types.KeyboardButton('Менеджер по продажам (Sales Manager)')
-        btn9 = types.KeyboardButton('Офис-менеджер')
-        btn10 = types.KeyboardButton('Маркетолог')
-        # btn5 = types.KeyboardButton('Специалист по тендерам')
-        # btn3 = types.KeyboardButton('Рroject Manager')
-        # btn2 = types.KeyboardButton('DevOps')
-        # btn6 = types.KeyboardButton('Стажер-Лидогенератор')
-        # btn7 = types.KeyboardButton('Контент-менеджер')
-        # btn8 = types.KeyboardButton('Графический дизайнер')
-        btn4 = types.KeyboardButton('🔙 Главное меню')
-        markup.add(btn1, btn9, btn10, btn4)
-        # bot.send_message(message.from_user.id,
-        #                  'Раздел: 📢 Вакансии\n \n👍🏻 Хочешь создавать лучшее? Тогда нам по пути! \n📲 Перейти к '
-        #                  'разделу можно по ссылке ' + setting.vacansies,
-        #                  reply_markup=markup2, parse_mode='HTML')
+        btn1 = types.KeyboardButton('React/React Native-разработчик')
+        btn2 = types.KeyboardButton('Frontend-разработчик')
+        btn3 = types.KeyboardButton('Fullstack-разработчик')
+        btn4 = types.KeyboardButton('Менеджер по продажам (Sales Manager)')
+        btn6 = types.KeyboardButton('Маркетолог-аналитик')
+        btn7 = types.KeyboardButton('Лидогенератор')
+        btn8 = types.KeyboardButton('Менеджер проектов')
+        btn5 = types.KeyboardButton('Стажер-рекрутер')
+        # btn9 = types.KeyboardButton('Офис-менеджер')
+        # btn10 = types.KeyboardButton('Специалист по тендерам')
+        # btn11 = types.KeyboardButton('DevOps')
+        # btn12 = types.KeyboardButton('Стажер-Лидогенератор')
+        # btn13 = types.KeyboardButton('Контент-менеджер')
+        # btn14 = types.KeyboardButton('Графический дизайнер')
+        btn15 = types.KeyboardButton('🔙 Главное меню')
+        markup.add(btn1, btn2, btn3, btn4, btn8, btn6, btn7, btn5, btn15)
         bot.send_message(message.from_user.id,
                          'Раздел: 📢 Вакансии\n \n👍🏻 Хочешь создавать лучшее? Тогда нам по пути! \n',
                          reply_markup=markup2, parse_mode='HTML')
         bot.send_message(message.from_user.id, '⬇ Или перейди на нужную вакансию по кнопкам ниже', reply_markup=markup)
 
+
+    elif message.text == 'Frontend-разработчик':
+        logging.info('Открыт раздел Frontend-разработчик, юзер - ' + message.chat.username)
+        markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
+        btn1 = types.KeyboardButton('🔙 Главное меню')
+        markup.add(btn1)
+        markup2 = types.InlineKeyboardMarkup()
+        markup2.add(types.InlineKeyboardButton("Откликнуться", setting.Link_vacansies))
+        items_task_frontend = ['Разработка веб-приложения с использованием React;',
+                               'Typescript;',
+                               'Material UI;',
+                               'Styled components;',
+                               'Redux + Redux Toolkit;',
+                               'Socket.io']
+        items_experience_frontend = ['React;',
+                               'Typescript;',
+                               'Redux+Redux Toolkit;',
+                               'Material UI;',
+                               'Styled components',
+                               'Socket.io;',
+                               'Крутой бонус, если есть опыт с Node.js;',
+                               'Уровень английского не ниже B1;',
+                               'Опыт от 2-х лет']
+        list_task_frontend = '\n'.join([f'• {item}' for item in items_task_frontend])
+        list_experience_frontend = '\n'.join([f'• {item}' for item in items_experience_frontend])
+        bot.send_message(message.from_user.id,'Твои задачи:')
+        bot.send_message(message.from_user.id, list_task_frontend)
+        bot.send_message(message.from_user.id,'Твой опыт:')
+        bot.send_message(message.from_user.id, list_experience_frontend, reply_markup=markup2, parse_mode='HTML')
+
+    elif message.text == 'React/React Native-разработчик':
+        logging.info('Открыт раздел React/React Native-разработчик, юзер - ' + message.chat.username)
+        markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
+        btn1 = types.KeyboardButton('🔙 Главное меню')
+        markup.add(btn1)
+        markup2 = types.InlineKeyboardMarkup()
+        markup2.add(types.InlineKeyboardButton("Откликнуться", setting.Link_vacansies))
+        items_task_reactNative = ['Уметь работать в команде;',
+                               'быть вовлеченным в работу;',
+                               'быть нацеленным на успех нашей компании и компании клиента;',
+                               'иметь отличные навыки описания технических проблем;',
+                               'уметь правильно формулировать и не стесняться задавать вопросы;',
+                               'уметь эффективно коммуницировать с тестировщиками;',
+                                'уметь расслабляться']
+        items_experience_reactNative = ['опыт коммерческой разработки от 2 лет;',
+                               'знание и умение использовать следующие технологии: React Native, Redux, Serverless,'
+                               'JavaScript ES5/ES6, TypeScript, HTML5, CSS3, SASS/LESS, Responsive design, Webpack, npm;',
+                               'знание и понимание принципов работы и паттернов React и Redux;',
+                               'уверенные знания JavaScript, HTML, CSS а также DOM, BEM, SASS/LESS;',
+                               'опыт работы с REST API;',
+                               'опыт работы с babel, webpack, gulp, npm и т.д;',
+                               'опыт работы с Git;',
+                               'знание английского языка не ниже В2;',
+                               'жирным плюсом будет опыт работы с SQL и Supabase.']
+        list_task_reactNative = '\n'.join([f'• {item}' for item in items_task_reactNative])
+        list_experience_reactNative = '\n'.join([f'• {item}' for item in items_experience_reactNative])
+        bot.send_message(message.from_user.id,'Твои задачи:')
+        bot.send_message(message.from_user.id, list_task_reactNative)
+        bot.send_message(message.from_user.id,'Твой опыт:')
+        bot.send_message(message.from_user.id, list_experience_reactNative, reply_markup=markup2, parse_mode='HTML')
+
+    elif message.text == 'Fullstack-разработчик':
+        logging.info('Открыт раздел Fullstack-разработчик, юзер - ' + message.chat.username)
+        markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
+        btn1 = types.KeyboardButton('🔙 Главное меню')
+        markup.add(btn1)
+        markup2 = types.InlineKeyboardMarkup()
+        markup2.add(types.InlineKeyboardButton("Откликнуться", setting.Link_vacansies))
+        items_task_fullstack = ['Разработка веб-приложения с использованием React;',
+                               'Typescript;',
+                               'Material UI;',
+                               'Styled components;',
+                               'Redux + Redux Toolkit;',
+                               'Socket.io',
+                               'Разработка серверной части веб-приложений;',
+                               'Проектирование API и базы данных;',
+                               'Разработка микросервисов.']
+        items_experience_fullstack = ['React;',
+                               'Typescript;',
+                               'Redux+Redux Toolkit;',
+                               'Material UI;',
+                               'Styled components',
+                               'Socket.io;',
+                               'знание Node.js и понимание принципов его работы;',
+                               'опыт с одним из фреймворков: Express, Nest.js, koa, Fastify;',
+                               'опыт работы хотя бы с одним из TypeORM/Sequelize/Mongo;',
+                               'опыт работы хотя бы с одним из AWS/GCP/Azure;',
+                               'знание Docker, Nginx, Unix;',
+                               'плюсом будет опыт разработки Serverless-приложений;',
+                               'Уровень английского не ниже B1;',
+                               'Опыт от 2-х лет']
+        list_task_fullstack = '\n'.join([f'• {item}' for item in items_task_fullstack])
+        list_experience_fullstack = '\n'.join([f'• {item}' for item in items_experience_fullstack])
+        bot.send_message(message.from_user.id,'Твои задачи:')
+        bot.send_message(message.from_user.id, list_task_fullstack)
+        bot.send_message(message.from_user.id,'Твой опыт:')
+        bot.send_message(message.from_user.id, list_experience_fullstack, reply_markup=markup2, parse_mode='HTML')
+
     elif message.text == 'Менеджер по продажам (Sales Manager)':
-        logging.info('Открыт раздел Менеджер по продажам, юзер - ' + message.chat.username)
+        logging.info('Открыт раздел Менеджер по продажам (Sales Manager), юзер - ' + message.chat.username)
         markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
         btn1 = types.KeyboardButton('🔙 Главное меню')
         markup.add(btn1)
         markup2 = types.InlineKeyboardMarkup()
-        markup2.add(types.InlineKeyboardButton("Открыть вакансию", setting.SALES_MANAGER_VK))
-        bot.send_message(message.from_user.id,
-                         'Менеджер по продажам (Sales Manager) -->>> Перейти к вакансии можно по ссылке ' + setting.SALES_MANAGER_VK,
-                         reply_markup=markup2, parse_mode='HTML')
+        markup2.add(types.InlineKeyboardButton("Откликнуться", setting.Link_vacansies))
+        items_task_salesManager = ['работа с текущей базой клиентов;',
+                               'составление CV разработчиков;',
+                               'согласование выхода на интервью;',
+                               'выполнение вспомогательных задач, сопутствующих работе с клиентами;',
+                               'ведение деловой переписки;',
+                               'работа с документами (NDA, договора);',
+                               'взаимодействие с менеджерами партнеров;',
+                               'презентация компании;',
+                               'поиск новых направлений аутстаффинга.']
+        items_experience_salesManager = ['опыт в IT-продажах;',
+                               'опыт работы с аутстаффингом;',
+                               'Redux+Redux Toolkit;',
+                               'знание английского НЕ требуется, но будет крутым бонусом.']
+        list_task_salesManager = '\n'.join([f'• {item}' for item in items_task_salesManager])
+        list_experience_salesManager = '\n'.join([f'• {item}' for item in items_experience_salesManager])
+        bot.send_message(message.from_user.id,'Твои задачи:')
+        bot.send_message(message.from_user.id, list_task_salesManager)
+        bot.send_message(message.from_user.id,'Твой опыт:')
+        bot.send_message(message.from_user.id, list_experience_salesManager, reply_markup=markup2, parse_mode='HTML')
 
-
-    elif message.text == 'Стажер-Лидогенератор':
-        logging.info('Открыт раздел Стажер-Лидогенератор, юзер - ' + message.chat.username)
-        markup = types.ReplyKeyboardMarkup(resize_keyboard=True, row_width=1)
-        btn1 = types.KeyboardButton('🔙 Главное меню')
-        btn3 = types.KeyboardButton('🕵🏼 Написать Даше (HR компании)')
-        markup.add(btn1, btn3)
-        markup2 = types.InlineKeyboardMarkup()
-        markup2.add(types.InlineKeyboardButton("Выполнить тестовое", setting.GOOGLE_FORM_GENERATOR))
-        bot.send_message(message.from_user.id,
-                         'Теперь у вас появилась еще одна возможность попасть к нам в компанию и войти в IT - '
-                         'через онлайн-стажировку в отделе продаж сроком 2 недели (по 20 часов в неделю)'
-                         'в зависимости от базовых знаний и уровня подготовки.',
-                         reply_markup=markup, parse_mode='HTML')
-        bot.send_message(message.from_user.id,
-                         'Выполни тестовое, получи обратную связь и приглашение на собеседование.'
-                         'Даша с тобой на связи здесь: >>>'
-                         + setting.VK_HR,
-                         reply_markup=markup2, parse_mode='HTML')
-
-    elif message.text == 'Офис-менеджер':
-        logging.info('Открыт раздел Офис-менеджер, юзер - ' + message.chat.username)
-        markup = types.ReplyKeyboardMarkup(resize_keyboard=True, row_width=1)
-        btn1 = types.KeyboardButton('🔙 Главное меню')
-        btn3 = types.KeyboardButton('🕵🏼 Написать Даше (HR компании)')
-        markup.add(btn1, btn3)
-        markup2 = types.InlineKeyboardMarkup()
-        markup2.add(types.InlineKeyboardButton("Откликнуться", setting.VK_HR))
-        bot.send_message(message.from_user.id,
-                         'Нам нужен тот, кто будет беречь наш уют и отвечать за хозяйственно-организационную часть жизни. '
-                         'И ты обязательно должен быть сведущ в ведении первичной документации'
-                         'и отличать акт сверки от счета-фактуры', reply_markup=markup, parse_mode='HTML')
-        bot.send_message(message.from_user.id,
-                         'Подробное описание обязанностей / вилки и прочего - у Даши >>>'
-                         + setting.VK_HR,
-                         reply_markup=markup2, parse_mode='HTML')
-
-    elif message.text == 'Маркетолог':
-        logging.info('Открыт раздел Маркетолог, юзер - ' + message.chat.username)
-        markup = types.ReplyKeyboardMarkup(resize_keyboard=True, row_width=1)
-        btn1 = types.KeyboardButton('🔙 Главное меню')
-        btn3 = types.KeyboardButton('🕵🏼 Написать Даше (HR компании)')
-        markup.add(btn1, btn3)
-        markup2 = types.InlineKeyboardMarkup()
-        markup2.add(types.InlineKeyboardButton("Откликнуться", setting.VK_HR))
-        bot.send_message(message.from_user.id,
-                         'Нам нужен тот, кто будет развиваться с нами в новых направлениях '
-                         'и погружаться в их глубокую аналитику',reply_markup=markup, parse_mode='HTML')
-        bot.send_message(message.from_user.id,
-                         'Подробное описание обязанностей / вилки и прочего - у Даши >>>'
-                         + setting.VK_HR,
-                         reply_markup=markup2, parse_mode='HTML')
-
-    elif message.text == 'UI/UX дизайнер':
-        logging.info('Открыт раздел дизайнер, юзер - ' + message.chat.username)
+    elif message.text == 'Стажер-рекрутер':
+        logging.info('Открыт раздел Стажер-рекрутер, юзер - ' + message.chat.username)
         markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
         btn1 = types.KeyboardButton('🔙 Главное меню')
         markup.add(btn1)
         markup2 = types.InlineKeyboardMarkup()
-        markup2.add(types.InlineKeyboardButton("Открыть вакансию", setting.DESIGN))
-        bot.send_message(message.from_user.id,
-                         'UI/UX дизайнер -->>> Перейти к разделу можно по ссылке ' + setting.DESIGN,
-                         reply_markup=markup2, parse_mode='HTML')
+        markup2.add(types.InlineKeyboardButton("Откликнуться", setting.Link_vacansies))
+        items_task_stajer_recruiter = ['составление портрета кандидата;',
+                               'поиск и подбор кандидатов по заданным вакансиям;',
+                               'общение с кандидатами;',
+                               'проведение первичных интервью.']
+        items_experience_stajer_recruiter = ['вакансия подразумевает обучение работе с нужными инструментами по разработанному ментором плану;',
+                               'важно иметь представление о рекрутинге;',
+                               'уметь общаться с людьми;',
+                               'быть грамотным (устная и письменная речь) и вежливым;',
+                               'быть нацеленным не просто на закрытие вакансии, а на подбор эффективного члена команды.']
+        list_task_stajer_recruiter = '\n'.join([f'• {item}' for item in items_task_stajer_recruiter])
+        list_experience_stajer_recruiter = '\n'.join([f'• {item}' for item in items_experience_stajer_recruiter])
+        bot.send_message(message.from_user.id,'Твои задачи:')
+        bot.send_message(message.from_user.id, list_task_stajer_recruiter)
+        bot.send_message(message.from_user.id,'Твой опыт:')
+        bot.send_message(message.from_user.id, list_experience_stajer_recruiter, reply_markup=markup2, parse_mode='HTML')
 
-    elif message.text == 'Разработчик Fullstack':
-        logging.info('Открыт раздел Разработчик, юзер - ' + message.chat.username)
+    elif message.text == 'Маркетолог-аналитик':
+        logging.info('Открыт раздел Маркетолог-аналитик, юзер - ' + message.chat.username)
         markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
         btn1 = types.KeyboardButton('🔙 Главное меню')
         markup.add(btn1)
         markup2 = types.InlineKeyboardMarkup()
-        markup2.add(types.InlineKeyboardButton("Открыть вакансию", setting.DEV_FULL))
-        bot.send_message(message.from_user.id,
-                         'Разработчик Fullstack -->>> Перейти к разделу можно по ссылке ' + setting.DEV_FULL,
-                         reply_markup=markup2, parse_mode='HTML')
+        markup2.add(types.InlineKeyboardButton("Откликнуться", setting.Link_vacansies))
+        items_task_marketolog_analytics = ['маркетинговый анализ;',
+                               'маркетинговые исследования;',
+                               'анализ внутреннего рынка и проработка новых ниш;',
+                               'SWOT-анализ;',
+                               'анализ конкурентной среды;',
+                               'анализ данных;',
+                               'разработка маркетинговой стратегии;',
+                               'работа с рекламными кабинетами и метриками;',
+                               'работа с инструментами сквозной аналитики;',
+                               'работа с прочими маркетинговыми инструментами.']
+        items_experience_marketolog_analytics = ['опыт работы со всеми вышеперечисленными задачами и маркетинговыми инструментами;',
+                               'знание английского не требуется, но будет большим плюсом.']
+        list_task_marketolog_analytics = '\n'.join([f'• {item}' for item in items_task_marketolog_analytics])
+        list_experience_marketolog_analytics = '\n'.join([f'• {item}' for item in items_experience_marketolog_analytics])
+        bot.send_message(message.from_user.id,'Твои задачи:')
+        bot.send_message(message.from_user.id, list_task_marketolog_analytics)
+        bot.send_message(message.from_user.id,'Твой опыт:')
+        bot.send_message(message.from_user.id, list_experience_marketolog_analytics, reply_markup=markup2, parse_mode='HTML')
 
-    elif message.text == 'Специалист по тендерам':
-        logging.info('Открыт раздел Специалист по тендерам, юзер - ' + message.chat.username)
-        markup = types.ReplyKeyboardMarkup(resize_keyboard=True, row_width=1)
+    elif message.text == 'Лидогенератор':
+        logging.info('Открыт раздел Лидогенератор, юзер - ' + message.chat.username)
+        markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
         btn1 = types.KeyboardButton('🔙 Главное меню')
-        btn2 = types.KeyboardButton('📝 Оставить заявку')
-        btn3 = types.KeyboardButton('🕵🏼 Написать Даше (HR компании)')
-        markup.add(btn1, btn2, btn3)
+        markup.add(btn1)
         markup2 = types.InlineKeyboardMarkup()
-        markup2.add(types.InlineKeyboardButton("Откликнуться", setting.VK_HR))
-        bot.send_message(message.from_user.id,
-                         'У нас открылась еще одна интересная вакансия, но уже для более опытных соискателей - '
-                         'специалист по тендерам. Обязанности стандартны - поиск тендеров и аукционов, '
-                         'аналитика и оценка выгоды сотрудничества,'
-                         'работа с электронными торговыми площадками, электронными аукционами и сопроводительной '
-                         'документацией',
-                         reply_markup=markup, parse_mode='HTML')
-        bot.send_message(message.from_user.id,
-                         'Оставьте заявку для дальнейшего собеседования или по всем вопросам и деталям пиши '
-                         'Даше сюда --->>>'
-                         + setting.VK_HR,
-                         reply_markup=markup2, parse_mode='HTML')
+        markup2.add(types.InlineKeyboardButton("Откликнуться", setting.Link_vacansies))
+        items_task_lidogenerator = ['генерация и постоянное наращивание базы иностранных лидов;',
+                               'работа с соответствующими инструментами.']
+        items_experience_lidogenerator = ['письменный английский от В1;',
+                                                 'опыт работы 1+ год на позиции лидгенератора в IT;',
+                                                 'высокий уровень коммуникативных навыков;',
+                                                 'грамотная устная и письменная речь.']
+        list_task_lidogenerator = '\n'.join([f'• {item}' for item in items_task_lidogenerator])
+        list_experience_lidogenerator = '\n'.join([f'• {item}' for item in items_experience_lidogenerator])
+        bot.send_message(message.from_user.id,'Твои задачи:')
+        bot.send_message(message.from_user.id, list_task_lidogenerator)
+        bot.send_message(message.from_user.id,'Твой опыт:')
+        bot.send_message(message.from_user.id, list_experience_lidogenerator, reply_markup=markup2, parse_mode='HTML')
 
-    elif message.text == 'Контент-менеджер':
-        logging.info('Открыт раздел Контент-менеджер, юзер - ' + message.chat.username)
-        markup = types.ReplyKeyboardMarkup(resize_keyboard=True, row_width=1)
+    elif message.text == 'Менеджер проектов':
+        logging.info('Открыт раздел Стажер-рекрутер, юзер - ' + message.chat.username)
+        markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
         btn1 = types.KeyboardButton('🔙 Главное меню')
-        btn2 = types.KeyboardButton('📝 Оставить заявку')
-        btn3 = types.KeyboardButton('🕵🏼 Написать Даше (HR компании)')
-        markup.add(btn1, btn2, btn3)
+        markup.add(btn1)
         markup2 = types.InlineKeyboardMarkup()
-        markup2.add(types.InlineKeyboardButton("Откликнуться", setting.VK_HR))
-        bot.send_message(message.from_user.id,
-                         'Оставьте заявку для дальнейшего собеседования или по всем вопросам и деталям пиши '
-                         'Даше сюда --->>>'
-                         + setting.VK_HR,
-                         reply_markup=markup, parse_mode='HTML')
-
-    elif message.text == 'Графический дизайнер':
-        logging.info('Открыт раздел Графический дизайнер, юзер - ' + message.chat.username)
-        markup = types.ReplyKeyboardMarkup(resize_keyboard=True, row_width=1)
-        btn1 = types.KeyboardButton('🔙 Главное меню')
-        btn2 = types.KeyboardButton('📝 Оставить заявку')
-        btn3 = types.KeyboardButton('🕵🏼 Написать Даше (HR компании)')
-        markup.add(btn1, btn2, btn3)
-        markup2 = types.InlineKeyboardMarkup()
-        markup2.add(types.InlineKeyboardButton("Откликнуться", setting.VK_HR))
-        bot.send_message(message.from_user.id,
-                         'Оставьте заявку для дальнейшего собеседования или по всем вопросам и деталям пиши '
-                         'Даше сюда --->>>'
-                         + setting.VK_HR,
-                         reply_markup=markup, parse_mode='HTML')
-
-    elif message.text == 'DevOps':
-        logging.info('Открыт раздел DevOps, юзер - ' + message.chat.username)
-        markup = types.ReplyKeyboardMarkup(resize_keyboard=True, row_width=1)
-        btn1 = types.KeyboardButton('🔙 Главное меню')
-        btn2 = types.KeyboardButton('📝 Оставить заявку')
-        btn3 = types.KeyboardButton('🕵🏼 Написать Даше (HR компании)')
-        markup.add(btn1, btn2, btn3)
-        markup2 = types.InlineKeyboardMarkup()
-        markup2.add(types.InlineKeyboardButton("Откликнуться", setting.VK_HR))
-        bot.send_message(message.from_user.id,
-                         'Оставьте заявку для дальнейшего собеседования или по всем вопросам и деталям пиши '
-                         'Даше сюда --->>>'
-                         + setting.VK_HR,
-                         reply_markup=markup2, parse_mode='HTML')
-
-    elif message.text == 'Рroject Manager':
-        logging.info('Открыт раздел Рroject Manager, юзер - ' + message.chat.username)
-        markup = types.ReplyKeyboardMarkup(resize_keyboard=True, row_width=1)
-        btn1 = types.KeyboardButton('🔙 Главное меню')
-        btn2 = types.KeyboardButton('📝 Оставить заявку')
-        btn3 = types.KeyboardButton('🕵🏼 Написать Даше (HR компании)')
-        markup.add(btn1, btn2, btn3)
-        markup2 = types.InlineKeyboardMarkup()
-        markup2.add(types.InlineKeyboardButton("Откликнуться", setting.VK_HR))
-        bot.send_message(message.from_user.id,
-                         'Оставьте заявку для дальнейшего собеседования или по всем вопросам и деталям пиши '
-                         'Даше сюда --->>>'
-                         + setting.VK_HR,
-                         reply_markup=markup2, parse_mode='HTML')
+        markup2.add(types.InlineKeyboardButton("Откликнуться", setting.Link_vacansies))
+        items_task_project_manager = ['планирование работ, сбор и анализ требований, постановка задач исполнителям, контроль результатов, сроков и бюджета;',
+                               'созвоны с клиентами, управление их ожиданиями, совместная разработка роадмапов;',
+                               'контроль своевременной оплаты от клиентов;',
+                               'организация слаженной работы в проектной команде;',
+                               'проактивность, участие в улучшении процессов компании.']
+        items_experience_project_manager = ['релевантный опыт от 2-х лет;',
+                               'разговорный английский уровня В2 и выше.']
+        list_task_project_manager = '\n'.join([f'• {item}' for item in items_task_project_manager])
+        list_experience_project_manager = '\n'.join([f'• {item}' for item in items_experience_project_manager])
+        bot.send_message(message.from_user.id,'Твои задачи:')
+        bot.send_message(message.from_user.id, list_task_project_manager)
+        bot.send_message(message.from_user.id,'Твой опыт:')
+        bot.send_message(message.from_user.id, list_experience_project_manager, reply_markup=markup2, parse_mode='HTML')
 
     elif message.text == '⚖️ Стажировка':
         logging.info('Открыт раздел Стажировка, юзер -' + message.chat.username)

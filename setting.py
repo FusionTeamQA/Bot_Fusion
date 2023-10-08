@@ -3,6 +3,7 @@ token_test = '5711969178:AAE1u9yT6xLMtYxzphjVTIQeRF_5XSll_5M'
 
 admin_id_ugraswim = 597010493
 admin_hr_id = 563921309
+# group_id
 # admin_kate_id =
 # Общие ссылки
 website = "https://fusion-tech.pro"
@@ -19,6 +20,7 @@ DEV_FULL = 'https://career.habr.com/vacancies/1000116914'
 # DEV_FRONT =
 # DEV_BACK =
 DESIGN = 'https://career.habr.com/vacancies/1000116917'
+Link_vacansies = "https://fusion-tech.ru/vacancies"
 # HR =
 # OFFICE_MANAGER =
 # PROJECT_MANAGER =
